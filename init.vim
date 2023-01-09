@@ -11,7 +11,6 @@ Plug 'bluz71/vim-moonfly-colors'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/playground'
-Plug 'p00f/nvim-ts-rainbow'
 Plug 'andymass/vim-matchup'
 
 Plug 'nvim-lua/popup.nvim'
@@ -25,6 +24,8 @@ Plug 'Zane-/cder.nvim'
 Plug 'dhruvmanila/telescope-bookmarks.nvim', { 'tag': '*' }
 " Uncomment if the selected browser is Firefox, Waterfox or buku
 Plug 'kkharji/sqlite.lua'
+
+Plug 'tex/telescope-gtags'
 
 Plug 'inkarkat/vim-IndentConsistencyCop'
 Plug 'tpope/vim-sleuth'
@@ -67,9 +68,11 @@ Plug 'hrsh7th/vim-vsnip-integ'
 
 "Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
-
 " Magit for neovim
 Plug 'TimUntersberger/neogit'
+Plug 'tpope/vim-fugitive'
+Plug 'idanarye/vim-merginal'
+
 
 Plug 'kyazdani42/nvim-web-devicons'
 
@@ -86,8 +89,8 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
 "Plug 'smolck/command-completion.nvim', { 'branch': 'add-0.6-compat'}
 
-Plug 'elihunter173/dirbuf.nvim'
-
+"Plug 'elihunter173/dirbuf.nvim'
+Plug 'stevearc/oil.nvim'
 "Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 "Plug 'sainnhe/edge'
@@ -116,6 +119,7 @@ Plug 'inkarkat/vim-mark'
 
 " Nice bookmarks with mm, mi, mc, ma
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'tom-anders/telescope-vim-bookmarks.nvim'
 
 " Plug 'ton/vim-bufsurf'
 
@@ -150,6 +154,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx yarn install' }
 " Finds root folder of current file
 Plug 'notjedi/nvim-rooter.lua'
 
+Plug 'phaazon/mind.nvim'
+
+Plug 'junegunn/rainbow_parentheses.vim'
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
@@ -170,7 +177,18 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
+require('telescope').load_extension('gtags')
+require('telescope').load_extension('vim_bookmarks')
+local bookmark_actions = require('telescope').extensions.vim_bookmarks.actions
+require('telescope').extensions.vim_bookmarks.all {
+    attach_mappings = function(_, map) 
+        map('n', 'dd', bookmark_actions.delete_selected_or_at_cursor)
+        return true
+    end
+}
 
+require('mind').setup()
+-- require('mini.animate').setup()
 require('neogit').setup {}
 
 -- require('hologram').setup{
@@ -182,7 +200,7 @@ require('leap-spooky').setup({
   -- if the unnamed register is in use.
   -- (Experimental feature - I'm thinking about the proper API for this.)
   yank_paste = false,
-  keys = { 
+  keys = {
     -- For each scope, define a table like below, with separate affixes
     -- corresponding to "inner" and "around" objects.
     -- These will generate mappings for all given text objects, like:
@@ -203,12 +221,73 @@ require('leap-spooky').setup({
   opts = nil,
 })
 
+require('oil').setup {
+      -- Id is automatically added at the beginning, and name at the end
+      -- See :help oil-columns
+      columns = {
+        "icon",
+        -- "permissions",
+        "size",
+        "mtime",
+      },
+      -- Window-local options to use for oil buffers
+      win_options = {
+        wrap = false,
+        signcolumn = "no",
+        cursorcolumn = false,
+        foldcolumn = "0",
+        spell = false,
+        list = false,
+        conceallevel = 3,
+        concealcursor = "n",
+      },
+      -- Restore window options to previous values when leaving an oil buffer
+      restore_win_options = true,
+      -- Skip the confirmation popup for simple operations
+      skip_confirm_for_simple_edits = false,
+      -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
+      -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
+      -- Additionally, if it is a string that matches "action.<name>",
+      -- it will use the mapping at require("oil.action").<name>
+      -- Set to `false` to remove a keymap
+      keymaps = {
+        ["g?"] = "actions.show_help",
+        ["<CR>"] = "actions.select",
+        ["<C-x>"] = "actions.select_vsplit",
+        ["<C-s>"] = "actions.select_split",
+        ["<C-p>"] = "actions.preview",
+        ["-"] = "actions.close",
+        ["<C-r>"] = "actions.refresh",
+        ["<BS>"] = "actions.parent",
+        ["gc"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        ["g."] = "actions.toggle_hidden",
+      },
+      -- Set to false to disable all of the above keymaps
+      use_default_keymaps = false,
+      view_options = {
+        -- Show files and directories that start with "."
+        show_hidden = false,
+      },
+      -- Configuration for the floating window in oil.open_float
+      float = {
+        -- Padding around the floating window
+        padding = 2,
+        max_width = 0,
+        max_height = 0,
+        border = "rounded",
+        win_options = {
+          winblend = 10,
+        },
+      },
+    }
+vim.keymap.set('n', '-', function() require('oil').open() end)
+
 EOF
 
 "lua require("neoclip").setup()
-lua require('dirbuf').setup { show_hidden = true, }
-
-
+"lua require('dirbuf').setup { show_hidden = true, }
 lua require('gitsigns').setup()
 
 set guifont=FiraCode\ Nerd\ Font\ Mono:h14
@@ -251,20 +330,25 @@ let g:bookmark_auto_close = 1
 "nmap <silent> <C-o> :BufSurfBack<CR>
 "nmap <silent> <C-i> :BufSurfForward<CR>
 
-
-nmap <silent> <space>b :Telescope buffers<CR>
-nmap <silent> <space>m :Telescope oldfiles<CR>
-
 lua << EOF
 
 local default_opts = {noremap = true, silent = true}
+vim.keymap.set('n', '<space>b', ':Telescope buffers<cr>', default_opts)
+vim.keymap.set('n', '<space>m', ':Telescope oldfiles<cr>', default_opts)
 vim.keymap.set('n', '<space>g', '"zyiw:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set('v', '<space>g', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set("n", '<space>"', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
+vim.keymap.set("n", '<C-]>', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'g]', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 
+-- Move selected area up / down
+vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
+
+vim.keymap.set("x", "<space>p", '"_dP')
 EOF
 
 set clipboard=unnamedplus
@@ -287,7 +371,7 @@ lua <<EOF
 vim.opt.spell = true
 vim.opt.spelllang = { 'en_us' }
 
-
+vim.opt.scrolloff = 10
 
 
 EOF
@@ -299,8 +383,17 @@ set nofoldenable
 
 set conceallevel=1
 
-" To map <Esc> to exit terminal-mode:  
+" To map <Esc> to exit terminal-mode:
 tnoremap <Esc> <C-\><C-n>
-" To simulate |i_CTRL-R| in terminal-mode:  
+" To simulate |i_CTRL-R| in terminal-mode:
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
 
+" Prevent 'tilde backup files' (eg. myfile.txt~) from being created
+set nobackup
+
+" Disable 'swap files' (eg. .myfile.txt.swp) from being created
+set noswapfile
+
+let g:rainbow#max_level = 16
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+au VimEnter * RainbowParentheses
