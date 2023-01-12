@@ -1,15 +1,3 @@
-require("telescope").load_extension('file_browser')
--- require("telescope").load_extension('neoclip')
--- require("telescope").load_extension('macroscope')
-require('telescope').load_extension('asynctasks')
-require('telescope').load_extension('live_grep_args')
--- this is from yanky
-require('telescope').load_extension('yank_history')
-require('telescope').load_extension('cder')
-require('telescope').load_extension('bookmarks')
-require('telescope').load_extension('gtags')
-require('telescope').load_extension('vim_bookmarks')
-
 local actions = require("telescope.actions")
 local action_state = require('telescope.actions.state')
 local transform_mod = require("telescope.actions.mt").transform_mod
@@ -195,6 +183,11 @@ require'telescope'.setup({
                     ordinal = line,
                 }
             end,
+            mappings = {
+                default = function(directory)
+                    require('oil').open(directory)
+                end,
+            }
       },
     bookmarks = {
       -- Available:
@@ -238,3 +231,17 @@ require'telescope'.setup({
     },
   }
 })
+
+-- Loading extensions must be done AFTER Telescope setup!
+
+require("telescope").load_extension('file_browser')
+-- require("telescope").load_extension('neoclip')
+-- require("telescope").load_extension('macroscope')
+require('telescope').load_extension('asynctasks')
+require('telescope').load_extension('live_grep_args')
+-- this is from yanky
+require('telescope').load_extension('yank_history')
+require('telescope').load_extension('cder')
+require('telescope').load_extension('bookmarks')
+require('telescope').load_extension('gtags')
+require('telescope').load_extension('vim_bookmarks')

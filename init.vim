@@ -181,7 +181,7 @@ inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
 
-require('hex').setup({})
+require('hex').setup()
 
 require('mind').setup()
 -- require('mini.animate').setup()
@@ -339,6 +339,7 @@ vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_fil
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
 vim.keymap.set("n", '<C-]>', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'g-[', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
 
 -- Move selected area up / down
 vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
@@ -370,6 +371,17 @@ vim.opt.spelllang = { 'en_us' }
 vim.opt.scrolloff = 10
 
 vim.cmd [[let g:mkdp_preview_options = { 'uml': { 'server': 'http://localhost:8080', 'imageFormat': 'svg' }}]]
+
+-- Enables spellcheck for camel case words
+vim.opt.spelloptions = "camel"
+-- Ignores all capital letters misspelling
+--vim.cmd([[
+--fun! IgnoreCamelCaseSpell()
+--    syn match myExCapitalWords +\<\w*[A-Z]\K*\>+ contains=@NoSpell
+--endfun
+--
+--autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
+--]])
 
 EOF
 set number
