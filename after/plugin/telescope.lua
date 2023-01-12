@@ -7,10 +7,21 @@ require('telescope').load_extension('live_grep_args')
 require('telescope').load_extension('yank_history')
 require('telescope').load_extension('cder')
 require('telescope').load_extension('bookmarks')
+require('telescope').load_extension('gtags')
+require('telescope').load_extension('vim_bookmarks')
 
 local actions = require("telescope.actions")
 local action_state = require('telescope.actions.state')
 local transform_mod = require("telescope.actions.mt").transform_mod
+
+local bookmark_actions = require('telescope').extensions.vim_bookmarks.actions
+require('telescope').extensions.vim_bookmarks.all {
+    attach_mappings = function(_, map) 
+        map('n', 'dd', bookmark_actions.delete_selected_or_at_cursor)
+        return true
+    end
+}
+
 
 local function multiopen(prompt_bufnr, method)
   local edit_file_cmd_map = {
@@ -173,7 +184,19 @@ require'telescope'.setup({
     lsp_implementations  = picker_default_config,
   },
   extensions = {
-    bookmarks = {
+      cder = {
+            dir_command = { 'fd', '--type=d', '.' },
+            entry_maker = function(line)
+                return {
+                    value = line,
+                    display = function(entry)
+                        return ' ' .. line, { { { 1, 3 }, 'Directory' } }
+                    end,
+                    ordinal = line,
+                }
+            end,
+      },
+    bookmarks = {
       -- Available:
       --  * 'brave'
       --  * 'buku'

@@ -183,16 +183,6 @@ lua << EOF
 
 require('hex').setup({})
 
-require('telescope').load_extension('gtags')
-require('telescope').load_extension('vim_bookmarks')
-local bookmark_actions = require('telescope').extensions.vim_bookmarks.actions
-require('telescope').extensions.vim_bookmarks.all {
-    attach_mappings = function(_, map) 
-        map('n', 'dd', bookmark_actions.delete_selected_or_at_cursor)
-        return true
-    end
-}
-
 require('mind').setup()
 -- require('mini.animate').setup()
 require('neogit').setup {}
@@ -348,7 +338,7 @@ vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_fi
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
 vim.keymap.set("n", '<C-]>', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
-vim.keymap.set("n", '<C-[>', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'g-[', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 
 -- Move selected area up / down
 vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
