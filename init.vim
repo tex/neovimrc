@@ -157,6 +157,9 @@ Plug 'notjedi/nvim-rooter.lua'
 Plug 'phaazon/mind.nvim'
 
 Plug 'junegunn/rainbow_parentheses.vim'
+
+Plug 'RaafatTurki/hex.nvim'
+
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
@@ -177,6 +180,9 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
+
+require('hex').setup({})
+
 require('telescope').load_extension('gtags')
 require('telescope').load_extension('vim_bookmarks')
 local bookmark_actions = require('telescope').extensions.vim_bookmarks.actions
