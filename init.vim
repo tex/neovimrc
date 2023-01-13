@@ -337,8 +337,8 @@ vim.keymap.set("n", '<space>"', function() require("telescope").extensions.yank_
 vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
-vim.keymap.set("n", '<C-]>', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
-vim.keymap.set("n", 'g-[', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
 
 -- Move selected area up / down
