@@ -130,9 +130,9 @@ Plug 'anuvyklack/middleclass'
 Plug 'anuvyklack/animation.nvim'
 
 
-
-Plug 'ptzz/lf.vim'
-Plug 'voldikss/vim-floaterm'
+" Don't use it anymore
+" Plug 'ptzz/lf.vim'
+" Plug 'voldikss/vim-floaterm'
 
 Plug 'ggandor/leap.nvim'
 Plug 'ggandor/leap-spooky.nvim'
@@ -159,6 +159,8 @@ Plug 'phaazon/mind.nvim'
 Plug 'junegunn/rainbow_parentheses.vim'
 
 Plug 'RaafatTurki/hex.nvim'
+
+Plug 'eandrju/cellular-automaton.nvim'
 
 call plug#end()
 
@@ -346,6 +348,9 @@ vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
 
 vim.keymap.set("x", "<space>p", '"_dP')
+
+vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
+
 EOF
 
 set clipboard=unnamedplus
