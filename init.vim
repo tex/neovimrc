@@ -160,8 +160,6 @@ Plug 'junegunn/rainbow_parentheses.vim'
 
 Plug 'RaafatTurki/hex.nvim'
 
-Plug 'eandrju/cellular-automaton.nvim'
-
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
