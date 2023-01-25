@@ -1,14 +1,13 @@
 local wilder = require('wilder')
 wilder.setup({modes = {':', '/', '?'}})
 
-  wilder.set_option('pipeline', {
+wilder.set_option('pipeline', {
   wilder.branch(
     wilder.python_file_finder_pipeline({
-      -- to use ripgrep : {'rg', '--files'}
-      -- to use fd      : {'fd', '-tf'}
-      file_command = {'find', '.', '-type', 'f', '-printf', '%P\n'}, 
-      -- to use fd      : {'fd', '-td'}
-      dir_command = {'find', '.', '-type', 'd', '-printf', '%P\n'},
+      -- file_command = {'find', '.', '-type', 'f', '-printf', '%P\n'}, 
+      file_command = {'fd', '-tf' }, 
+      -- dir_command = {'find', '.', '-type', 'd', '-printf', '%P\n'},
+      dir_command = {'fd', '-td' },
       -- use {'cpsm_filter'} for performance, requires cpsm vim plugin
       -- found at https://github.com/nixprime/cpsm
       filters = {'fuzzy_filter', 'difflib_sorter'},
@@ -33,9 +32,6 @@ wilder.setup({modes = {':', '/', '?'}})
     })
   ),
 })
-
-  wilder.set_option('renderer', wilder.popupmenu_renderer(
-))
 
 local gradient = {
   '#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
@@ -63,7 +59,7 @@ wilder.set_option('renderer', wilder.popupmenu_renderer(
       -- selected_gradient key can be set to apply gradient highlighting for the selected candidate.
     },
     highlighter = wilder.highlighter_with_gradient({
-      wilder.basic_highlighter(), -- or wilder.lua_fzy_highlighter(),
+      wilder.basic_highlighter(), -- wilder.lua_fzy_highlighter() doesn't work with gradient
     }),
     left = {' ', wilder.popupmenu_devicons()},
     right = {' ', wilder.popupmenu_scrollbar()},

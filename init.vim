@@ -181,7 +181,9 @@ inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
 
-require('hex').setup()
+require('hex').setup({
+  is_binary_file = function(binary_ext) return false end,
+})
 
 require('mind').setup()
 -- require('mini.animate').setup()
@@ -345,6 +347,7 @@ vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest(
 vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
 
+-- Remap p (paste) to not take what it pates over
 vim.keymap.set("x", "<space>p", '"_dP')
 
 vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
