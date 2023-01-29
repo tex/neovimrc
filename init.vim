@@ -160,6 +160,8 @@ Plug 'junegunn/rainbow_parentheses.vim'
 
 Plug 'RaafatTurki/hex.nvim'
 
+Plug 'stevearc/aerial.nvim'
+
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
@@ -180,7 +182,6 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
-
 require('hex').setup({
   is_binary_file = function(binary_ext) return false end,
 })
