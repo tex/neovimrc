@@ -329,13 +329,17 @@ let g:bookmark_auto_close = 1
 lua << EOF
 
 local default_opts = {noremap = true, silent = true}
+vim.keymap.set('n', '<space><space>', ':Telescope resume<cr>', default_opts)
 vim.keymap.set('n', '<space>b', ':Telescope buffers<cr>', default_opts)
 vim.keymap.set('n', '<space>m', ':Telescope oldfiles<cr>', default_opts)
-vim.keymap.set('n', '<space>g', '"zyiw:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
+vim.keymap.set('n', '<space>g', ':Telescope live_grep_args<cr>', default_opts)
+vim.keymap.set('n', '<space>G', '"zyiw:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set('v', '<space>g', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
+vim.keymap.set('v', '<space>G', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set("n", '<space>"', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
+vim.keymap.set('n', '<space>F', function() require("telescope.builtin").find_files({ search_file = vim.fn.expand("<cword>") }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
 vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
