@@ -185,62 +185,6 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
-
-vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-
--- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-
-local handler = function(virtText, lnum, endLnum, width, truncate)
-    local newVirtText = {}
-    local suffix = ('  %d '):format(endLnum - lnum)
-    local sufWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = width - sufWidth
-    local curWidth = 0
-    for _, chunk in ipairs(virtText) do
-        local chunkText = chunk[1]
-        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-        if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-        else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, {chunkText, hlGroup})
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-                suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-        end
-        curWidth = curWidth + chunkWidth
-    end
-    table.insert(newVirtText, {suffix, 'MoreMsg'})
-    return newVirtText
-end
-
--- Option 3: treesitter as a main provider instead
--- Only depend on `nvim-treesitter/queries/filetype/folds.scm`,
--- performance and stability are better than `foldmethod=nvim_treesitter#foldexpr()`
-require('ufo').setup({
-    provider_selector = function(bufnr, filetype, buftype)
-        return {'treesitter', 'indent'}
-    end,
-    fold_virt_text_handler = handler,
-})
---
-
-
-
-
-
-
-
-
 -- require('mini.completion').setup()
 require('mini.ai').setup()
 require('mini.comment').setup()
@@ -282,69 +226,6 @@ require('leap-spooky').setup({
   -- E.g.: opts = { equivalence_classes = {} }
   opts = nil,
 })
-
-require('oil').setup {
-      -- Id is automatically added at the beginning, and name at the end
-      -- See :help oil-columns
-      columns = {
-        "icon",
-        -- "permissions",
-        "size",
-        "mtime",
-      },
-      -- Window-local options to use for oil buffers
-      win_options = {
-        wrap = false,
-        signcolumn = "no",
-        cursorcolumn = false,
-        foldcolumn = "0",
-        spell = false,
-        list = false,
-        conceallevel = 3,
-        concealcursor = "n",
-      },
-      -- Restore window options to previous values when leaving an oil buffer
-      restore_win_options = true,
-      -- Skip the confirmation popup for simple operations
-      skip_confirm_for_simple_edits = false,
-      -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
-      -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
-      -- Additionally, if it is a string that matches "action.<name>",
-      -- it will use the mapping at require("oil.action").<name>
-      -- Set to `false` to remove a keymap
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-x>"] = "actions.select_vsplit",
-        ["<C-s>"] = "actions.select_split",
-        ["<C-p>"] = "actions.preview",
-        ["-"] = "actions.close",
-        ["<C-r>"] = "actions.refresh",
-        ["<BS>"] = "actions.parent",
-        ["gc"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["g."] = "actions.toggle_hidden",
-      },
-      -- Set to false to disable all of the above keymaps
-      use_default_keymaps = false,
-      view_options = {
-        -- Show files and directories that start with "."
-        show_hidden = false,
-      },
-      -- Configuration for the floating window in oil.open_float
-      float = {
-        -- Padding around the floating window
-        padding = 2,
-        max_width = 0,
-        max_height = 0,
-        border = "rounded",
-        win_options = {
-          winblend = 10,
-        },
-      },
-    }
-vim.keymap.set('n', '-', function() require('oil').open() end)
 
 EOF
 
@@ -402,7 +283,8 @@ vim.keymap.set('n', '<space>g', ':Telescope live_grep_args<cr>', default_opts)
 vim.keymap.set('n', '<space>G', '"zyiw:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set('v', '<space>g', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set('v', '<space>G', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
-vim.keymap.set("n", '<space>"', function() require("telescope").extensions.yank_history.yank_history() end)
+vim.keymap.set("n", '<space>\'', function() require("telescope").extensions.yank_history.yank_history() end)
+vim.keymap.set("i", '<C-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
 vim.keymap.set('n', '<space>F', function() require("telescope.builtin").find_files({ search_file = vim.fn.expand("<cword>") }) end)
@@ -426,9 +308,6 @@ set clipboard=unnamedplus
 
 
 syntax enable
-
-" set completeopt=menu,menuone,noselect
-
 
 set completeopt=menu,menuone,noselect
 
@@ -455,10 +334,6 @@ vim.opt.spelloptions = "camel"
 
 EOF
 set number
-
-" set foldmethod=expr
-" set foldexpr=nvim_treesitter#foldexpr()
-" set nofoldenable
 
 set conceallevel=1
 
