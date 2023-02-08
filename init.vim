@@ -165,6 +165,8 @@ Plug 'stevearc/aerial.nvim'
 Plug 'kevinhwang91/promise-async'
 Plug 'kevinhwang91/nvim-ufo'
 
+Plug 'dhruvasagar/vim-table-mode'
+
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
