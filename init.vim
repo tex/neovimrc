@@ -286,7 +286,7 @@ vim.keymap.set('n', '<space>G', '"zyiw:Telescope live_grep_args default_text=<c-
 vim.keymap.set('v', '<space>g', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set('v', '<space>G', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
 vim.keymap.set("n", '<space>\'', function() require("telescope").extensions.yank_history.yank_history() end)
-vim.keymap.set("i", '<C-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
+vim.keymap.set("i", '<A-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
 vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
 vim.keymap.set('n', '<space>F', function() require("telescope.builtin").find_files({ search_file = vim.fn.expand("<cword>") }) end)
