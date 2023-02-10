@@ -245,3 +245,6 @@ require('telescope').load_extension('cder')
 require('telescope').load_extension('bookmarks')
 require('telescope').load_extension('gtags')
 require('telescope').load_extension('vim_bookmarks')
+require('telescope').load_extension('glyph')
+require('telescope').load_extension('emoji')
+

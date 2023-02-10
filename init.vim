@@ -167,6 +167,9 @@ Plug 'kevinhwang91/nvim-ufo'
 
 Plug 'dhruvasagar/vim-table-mode'
 
+Plug 'ghassan0/telescope-glyph.nvim'
+Plug 'xiyaowong/telescope-emoji.nvim'
+
 call plug#end()
 
 " This disabled auto scroll synchronization in mardown-preview.nvim
