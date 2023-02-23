@@ -20,6 +20,7 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Has bugs, development stalled, not really using it anyway
 " Plug 'nvim-telescope/telescope-media-files.nvim'
 Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+Plug 'molecule-man/telescope-menufacture'
 Plug 'Zane-/cder.nvim'
 Plug 'dhruvmanila/telescope-bookmarks.nvim', { 'tag': '*' }
 " Uncomment if the selected browser is Firefox, Waterfox or buku
@@ -277,27 +278,7 @@ let g:bookmark_auto_close = 1
 
 "nmap <silent> <C-o> :BufSurfBack<CR>
 "nmap <silent> <C-i> :BufSurfForward<CR>
-
 lua << EOF
-
-local default_opts = {noremap = true, silent = true}
-vim.keymap.set('n', '<space><space>', ':Telescope resume<cr>', default_opts)
-vim.keymap.set('n', '<space>b', ':Telescope buffers<cr>', default_opts)
-vim.keymap.set('n', '<space>m', ':Telescope oldfiles<cr>', default_opts)
-vim.keymap.set('n', '<space>g', ':Telescope live_grep_args<cr>', default_opts)
-vim.keymap.set('n', '<space>G', '"zyiw:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
-vim.keymap.set('v', '<space>g', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
-vim.keymap.set('v', '<space>G', '"zy:Telescope live_grep_args default_text=<c-r>z<cr>', default_opts)
-vim.keymap.set("n", '<space>\'', function() require("telescope").extensions.yank_history.yank_history() end)
-vim.keymap.set("i", '<A-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
-vim.keymap.set('n', '<space>ff', function() require("telescope.builtin").find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
-vim.keymap.set('n', '<space>f', function() require("telescope.builtin").find_files({ }) end)
-vim.keymap.set('n', '<space>F', function() require("telescope.builtin").find_files({ search_file = vim.fn.expand("<cword>") }) end)
-vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
-vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
-vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
-vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
-
 -- Move selected area up / down
 vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
@@ -356,3 +337,9 @@ set noswapfile
 let g:rainbow#max_level = 16
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 au VimEnter * RainbowParentheses
+
+set undofile
+
+
+"fix for yankring and neovim
+"let g:yankring_clipboard_monitor=0

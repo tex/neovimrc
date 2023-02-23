@@ -247,4 +247,27 @@ require('telescope').load_extension('gtags')
 require('telescope').load_extension('vim_bookmarks')
 require('telescope').load_extension('glyph')
 require('telescope').load_extension('emoji')
+require('telescope').load_extension('menufacture')
+
+
+vim.keymap.set("n", '<space><space>', function() require("telescope.builtin").resume() end)
+vim.keymap.set("n", '<space>b', function() require("telescope.builtin").buffers() end)
+vim.keymap.set("n", '<space>m', function() require("telescope.builtin").oldfiles() end)
+vim.keymap.set('n', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({}) end)
+vim.keymap.set('n', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = vim.fn.expand("<cword>") }) end)
+vim.keymap.set('v', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = get_visual() }) end)
+vim.keymap.set('v', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = get_visual() }) end)
+vim.keymap.set("n", '<space>\'', function() require("telescope").extensions.yank_history.yank_history() end)
+vim.keymap.set("i", '<A-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
+vim.keymap.set('n', '<space>ff', function() require("telescope").extensions.menufacture.find_files({ cwd = vim.fn.input("Find files Root > ", vim.fn.expand("%:h"), "dir") }) end)
+vim.keymap.set('n', '<space>f', function() require("telescope").extensions.menufacture.find_files({ }) end)
+vim.keymap.set('n', '<space>F', function() require("telescope").extensions.menufacture.find_files({ search_file = vim.fn.expand("<cword>") }) end)
+vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
+vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
+vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
+
+-- vim.keymap.set('n', '<leader>sg', require('telescope').extensions.menufacture.live_grep)
+-- vim.keymap.set('n', '<leader>sw', require('telescope').extensions.menufacture.grep_string)
+
 
