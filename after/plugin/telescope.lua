@@ -267,6 +267,7 @@ vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.
 vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
+vim.keymap.set("n", '<space>/', function() require("telescope.builtin").current_buffer_fuzzy_find({ default_text = vim.fn.expand("<cword>") }) end)
 
 -- vim.keymap.set('n', '<leader>sg', require('telescope').extensions.menufacture.live_grep)
 -- vim.keymap.set('n', '<leader>sw', require('telescope').extensions.menufacture.grep_string)
