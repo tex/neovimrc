@@ -155,6 +155,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx yarn install' }
 " Finds root folder of current file
 Plug 'notjedi/nvim-rooter.lua'
 
+" Obsoleted by its author
 Plug 'phaazon/mind.nvim'
 
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -171,9 +172,11 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'ghassan0/telescope-glyph.nvim'
 Plug 'xiyaowong/telescope-emoji.nvim'
 
+Plug 'nullchilly/fsread.nvim'
+
 call plug#end()
 
-" This disabled auto scroll synchronization in mardown-preview.nvim
+" This disabled auto scroll synchronization in markdown-preview.nvim
 " TODO: Make a function and keymap when in markdown buffer
 " let g:mkdp_preview_options.disable_sync_scroll = !g:mkdp_preview_options.disable_sync_scroll
 
