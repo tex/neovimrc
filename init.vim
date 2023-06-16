@@ -176,9 +176,6 @@ Plug 'nullchilly/fsread.nvim'
 
 call plug#end()
 
-" This disabled auto scroll synchronization in markdown-preview.nvim
-" TODO: Make a function and keymap when in markdown buffer
-" let g:mkdp_preview_options.disable_sync_scroll = !g:mkdp_preview_options.disable_sync_scroll
 
 nnoremap <A-Up> <C-w>k
 nnoremap <A-Down> <C-w>j
@@ -308,7 +305,7 @@ vim.opt.spelllang = { 'en_us' }
 
 vim.opt.scrolloff = 10
 
-vim.cmd [[let g:mkdp_preview_options = { 'uml': { 'server': 'http://localhost:8080', 'imageFormat': 'svg' }}]]
+vim.cmd [[let g:mkdp_preview_options = { 'uml': { 'server': 'http://localhost:8080', 'imageFormat': 'svg' }, 'disable_sync_scroll': 1}]]
 
 -- Enables spellcheck for camel case words
 vim.opt.spelloptions = "camel"
