@@ -52,14 +52,15 @@ cmp.setup({
       return kind
     end,
   },
+  completion = {
+    autocomplete = false,
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     -- ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<Down>"] = cmp.mapping.abort(),
-    ["<Up>"] = cmp.mapping.abort(),
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ["<Down>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
@@ -67,19 +68,18 @@ cmp.setup({
       -- elseif has_words_before() then
       --  cmp.complete()
       else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+        fallback()
       end
     end, { "i", "s" }),
-
-    ["<S-Tab>"] = cmp.mapping(function()
+    ["<Up>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
-      elseif has_words_before() then
-        cmp.complete()
+      -- elseif has_words_before() then
+      --  cmp.complete()
       else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<S-Tab>`.
+        fallback()
       end
     end, { "i", "s" }),
   }),
