@@ -174,6 +174,7 @@ Plug 'xiyaowong/telescope-emoji.nvim'
 
 Plug 'nullchilly/fsread.nvim'
 
+Plug 'kevinhwang91/nvim-bqf'
 call plug#end()
 
 
