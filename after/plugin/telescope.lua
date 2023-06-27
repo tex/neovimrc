@@ -108,6 +108,7 @@ end
 
 require'telescope'.setup({
   defaults = {
+    generic_sorter = require('mini.fuzzy').get_telescope_sorter,
     mappings = {
       i = {
         ['<C-j>']  = 'move_selection_next',
@@ -189,7 +190,7 @@ require'telescope'.setup({
                 end,
             }
       },
-    bookmarks = {
+      bookmarks = {
           selected_browser = 'firefox',
 
           -- Either provide a shell command to open the URL
