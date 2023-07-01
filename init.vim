@@ -195,63 +195,62 @@ lua << EOF
 -- require('mini.completion').setup()
 require('mini.ai').setup()
 require('mini.comment').setup()
-require('mini.surround').setup({})
-
+require('mini.surround').setup()
+require('gitsigns').setup()
 require('hex').setup({
   is_binary_file = function(binary_ext) return false end,
 })
 require('mind').setup()
 -- require('mini.animate').setup()
-require('neogit').setup {}
+require('neogit').setup()
 
 -- require('hologram').setup{
 --     auto_display = true -- WIP automatic markdown image display, may be prone to breaking
 -- }
-require('leap').add_default_mappings()
-require('leap-spooky').setup({
-  -- The yanked text will automatically be pasted at the cursor position
-  -- if the unnamed register is in use.
-  -- (Experimental feature - I'm thinking about the proper API for this.)
-  yank_paste = false,
-  keys = {
-    -- For each scope, define a table like below, with separate affixes
-    -- corresponding to "inner" and "around" objects.
-    -- These will generate mappings for all given text objects, like:
-    -- r{obj}, ar{obj}, R{obj}, aR{obj}, etc.
-    forward      = nil,
-    backward     = nil,
-    window       = { i = 'r', a = 'ar' },
-    cross_window = { i = 'R', a = 'aR' },
-  },
-  textobjects = {
-    'iw', 'iW', 'is', 'ip', 'i[', 'i]', 'i(', 'i)', 'ib',
-    'i>', 'i<', 'it', 'i{', 'i}', 'iB', 'i"', 'i\'', 'i`',
-    'aw', 'aW', 'as', 'ap', 'a[', 'a]', 'a(', 'a)', 'ab',
-    'a>', 'a<', 'at', 'a{', 'a}', 'aB', 'a"', 'a\'', 'a`',
-  },
-  -- Call-specific overrides for the Leap motion itself.
-  -- E.g.: opts = { equivalence_classes = {} }
-  opts = nil,
-})
-
-EOF
-
-"lua require("neoclip").setup()
-"lua require('dirbuf').setup { show_hidden = true, }
-lua require('gitsigns').setup()
-
-set guifont=FiraCode\ Nerd\ Font\ Mono:h14
-
-set mouse=a
-
-lua << EOF
 vim.opt.list = true
 --vim.opt.listchars:append "space:⋅"
 --vim.opt.listchars:append "eol:↴"
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
+
+-- Move selected area up / down
+vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
+
+-- Remap p (paste) to not take what it pates over
+vim.keymap.set("x", "<space>p", '"_dP')
+
+vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
+
+-- Set spell for cmd-spell
+vim.opt.spell = true
+vim.opt.spelllang = { 'en_us' }
+
+vim.opt.scrolloff = 10
+
+vim.cmd [[let g:mkdp_preview_options = { 'uml': { 'server': 'http://localhost:8080', 'imageFormat': 'svg' }, 'disable_sync_scroll': 1}]]
+
+-- Enables spellcheck for camel case words
+vim.opt.spelloptions = "camel"
+-- Ignores all capital letters misspelling
+--vim.cmd([[
+--fun! IgnoreCamelCaseSpell()
+--    syn match myExCapitalWords +\<\w*[A-Z]\K*\>+ contains=@NoSpell
+--endfun
+--
+--autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
+--]])
+
 EOF
+
+"lua require("neoclip").setup()
+"lua require('dirbuf').setup { show_hidden = true, }
+
+
+set guifont=FiraCode\ Nerd\ Font\ Mono:h14
+
+set mouse=a
 
 let g:nvcode_termcolors=256
 
@@ -279,17 +278,6 @@ let g:bookmark_auto_close = 1
 
 "nmap <silent> <C-o> :BufSurfBack<CR>
 "nmap <silent> <C-i> :BufSurfForward<CR>
-lua << EOF
--- Move selected area up / down
-vim.keymap.set("v", '<C-Up>', ":m '<-2<CR>gv=gv")
-vim.keymap.set("v", '<C-Down>', ":m '>+1<CR>gv=gv")
-
--- Remap p (paste) to not take what it pates over
-vim.keymap.set("x", "<space>p", '"_dP')
-
-vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
-
-EOF
 
 set clipboard=unnamedplus
 
@@ -298,28 +286,6 @@ syntax enable
 
 set completeopt=menu,menuone,noselect
 
-lua <<EOF
-
--- Set spell for cmd-spell
-vim.opt.spell = true
-vim.opt.spelllang = { 'en_us' }
-
-vim.opt.scrolloff = 10
-
-vim.cmd [[let g:mkdp_preview_options = { 'uml': { 'server': 'http://localhost:8080', 'imageFormat': 'svg' }, 'disable_sync_scroll': 1}]]
-
--- Enables spellcheck for camel case words
-vim.opt.spelloptions = "camel"
--- Ignores all capital letters misspelling
---vim.cmd([[
---fun! IgnoreCamelCaseSpell()
---    syn match myExCapitalWords +\<\w*[A-Z]\K*\>+ contains=@NoSpell
---endfun
---
---autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
---]])
-
-EOF
 set number
 
 set conceallevel=1
