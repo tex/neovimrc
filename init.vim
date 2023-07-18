@@ -101,7 +101,11 @@ Plug 'stevearc/oil.nvim'
 Plug 'glts/vim-magnum'		" Needed by vim-radical
 Plug 'glts/vim-radical'		" Show and convert hex, dec, bin, oct: gA crd crx crb cro
 
-"Plug 'tpope/vim-surround'	" c[hange]s[urrond][what][to] d[elete]s[urround][what]
+" c[hange]s[urrond][what][to]
+" d[elete]s[urround][what]
+" y[ank]s[urround][target][what]
+" virtual select S[what]
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
 
@@ -175,6 +179,8 @@ Plug 'xiyaowong/telescope-emoji.nvim'
 Plug 'nullchilly/fsread.nvim'
 
 Plug 'kevinhwang91/nvim-bqf'
+Plug 'KaitlynEthylia/TreePin'
+
 call plug#end()
 
 
@@ -192,10 +198,19 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
+
+require('treepin').setup {
+	hide_onscreen = true, -- Hide's the pin buffer when the text of the pin is visible.
+	max_height = 30, -- Prevents the pin buffer from displaying when the pin is larger than x lines.
+	position = 'relative', -- May be 'relative', 'top', or 'bottom'. Determines the position of the pin buffer within the window.
+	icon = '>', -- The icon to display in the sign column at the top of the pin. Set to nil to prevent the sign column being used.
+	zindex = 50, -- The Z-index of the pin buffer.
+	seperator = nil, -- A single character that may be used as a seperator between the editing buffer and the pin buffer.
+}
 -- require('mini.completion').setup()
 require('mini.ai').setup()
 require('mini.comment').setup()
-require('mini.surround').setup()
+-- require('mini.surround').setup()
 require('gitsigns').setup()
 require('hex').setup({
   is_binary_file = function(binary_ext) return false end,

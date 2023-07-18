@@ -126,7 +126,7 @@ require'telescope'.setup({
         ['<M-y>']  = 'open_qflist',
         ['<C-a>']  = function() feedkeys('<Home>') end,
         ['<C-e>']  = function() feedkeys('<End>') end,
-        ['<M-BS>'] = function() vim.api.nvim_input('<C-w>') end,
+        --['<C-BS>'] = function() vim.api.nvim_input('<C-w>') end,
         ['<C-u>']  = false,
         ['<C-v>']  = stopinsert(custom_actions.multi_selection_open_vertical),
         ['<C-s>']  = stopinsert(custom_actions.multi_selection_open_horizontal),
