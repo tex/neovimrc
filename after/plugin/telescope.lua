@@ -106,6 +106,25 @@ local function stopinsert(callback)
   end
 end
 
+local function _if(bool, val1, val2)
+  if bool then return val1 else return val2 end
+end
+
+-- get text selected in visual mode
+local function get_visual()
+  local _, ls, cs = unpack(vim.fn.getpos('v'))
+  local _, le, ce = unpack(vim.fn.getpos('.'))
+  return vim.api.nvim_buf_get_text(
+    0,
+    _if(ls-1 > le-1, le-1, ls-1),
+    _if(cs-1 > ce, ce, cs-1),
+    _if(ls-1 > le-1, ls-1, le-1),
+    _if(cs-1 > ce, cs-1, ce),
+    {}
+  )[1]
+end
+
+
 require'telescope'.setup({
   defaults = {
     generic_sorter = require('mini.fuzzy').get_telescope_sorter,

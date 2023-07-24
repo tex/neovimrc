@@ -181,6 +181,7 @@ Plug 'nullchilly/fsread.nvim'
 Plug 'kevinhwang91/nvim-bqf'
 Plug 'KaitlynEthylia/TreePin'
 
+Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 call plug#end()
 
 
@@ -198,6 +199,7 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
+require("lsp_lines").setup()
 
 require('treepin').setup {
 	hide_onscreen = true, -- Hide's the pin buffer when the text of the pin is visible.
