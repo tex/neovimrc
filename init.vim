@@ -154,7 +154,9 @@ Plug 'ldelossa/nvim-ide'
 Plug 'eandrju/cellular-automaton.nvim'
 
 " Requires nodejs and yarn (guix install node)
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx yarn install' }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx yarn install' }
+Plug 'tex/vimpreviewpandoc'
+Plug 'prabirshrestha/async.vim'
 
 " Finds root folder of current file
 Plug 'notjedi/nvim-rooter.lua'
