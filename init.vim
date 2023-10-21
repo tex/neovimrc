@@ -91,8 +91,13 @@ Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 "Plug 'smolck/command-completion.nvim', { 'branch': 'add-0.6-compat'}
 
 "Plug 'elihunter173/dirbuf.nvim'
-Plug 'stevearc/oil.nvim'
+Plug 'stevearc/oil.nvim' " -- very good, but trying neo-tree
 "Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'theblob42/drex.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim' " -- really good
+" Plug 'nvim-lua/plenary.nvim'
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+  Plug 'MunifTanjim/nui.nvim'
 
 "Plug 'sainnhe/edge'
 "Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
@@ -149,7 +154,7 @@ Plug 'nvim-lualine/lualine.nvim'
 
 Plug 'nullchilly/fsread.nvim'
 " Plug 'edluffy/hologram.nvim'	" inline show images, but it seems not to work correctly...
-Plug 'ldelossa/nvim-ide'
+" Plug 'ldelossa/nvim-ide'
 
 Plug 'eandrju/cellular-automaton.nvim'
 
