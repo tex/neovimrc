@@ -181,6 +181,9 @@ require'telescope'.setup({
     }
   },
   pickers = {
+find_files = {
+            find_command = { "fd", "--color", "never" }
+        },
     -- find_files = { mappings = telescope_multiselect_mappings },
     -- grep_string = { mappings = telescope_multiselect_mappings }
     quickfix             = picker_default_config,
@@ -264,7 +267,7 @@ vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({
 vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
 vim.keymap.set("n", '<space>/', function() require("telescope.builtin").current_buffer_fuzzy_find({ default_text = vim.fn.expand("<cword>") }) end)
 
--- vim.keymap.set('n', '<leader>sg', require('telescope').extensions.menufacture.live_grep)
+vim.keymap.set('n', '<space>h', require('telescope').extensions.menufacture.live_grep)
 -- vim.keymap.set('n', '<leader>sw', require('telescope').extensions.menufacture.grep_string)
 
 

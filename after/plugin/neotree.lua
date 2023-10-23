@@ -11,7 +11,7 @@ require("neo-tree").setup({
 })
 
 vim.keymap.set('n', '-', function() vim.cmd("Neotree toggle current reveal_force_cwd") end)
-vim.keymap.set('n', '_', function() vim.cmd("Neotree toggle") end)
+vim.keymap.set('n', '_', function() vim.cmd("Neotree toggle reveal_force_cwd") end)
 vim.keymap.set('n', '\\g', function() vim.cmd("Neotree float git_status") end)
 
 -- nnoremap \f :Neotree float reveal_file=<cfile> reveal_force_cwd<cr>
