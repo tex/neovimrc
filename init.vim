@@ -189,6 +189,8 @@ Plug 'kevinhwang91/nvim-bqf'
 Plug 'KaitlynEthylia/TreePin'
 
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+Plug 'danymat/neogen'
+
 call plug#end()
 
 
@@ -207,7 +209,7 @@ inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
 require("lsp_lines").setup()
-
+require('neogen').setup {}
 require('treepin').setup {
 	hide_onscreen = true, -- Hide's the pin buffer when the text of the pin is visible.
 	max_height = 30, -- Prevents the pin buffer from displaying when the pin is larger than x lines.
