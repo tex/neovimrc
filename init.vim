@@ -72,6 +72,7 @@ Plug 'lewis6991/gitsigns.nvim'
 " Magit for neovim
 Plug 'TimUntersberger/neogit'
 Plug 'tpope/vim-fugitive'
+Plug 'rbong/vim-flog'
 Plug 'idanarye/vim-merginal'
 
 
