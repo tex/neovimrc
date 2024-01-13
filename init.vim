@@ -87,7 +87,9 @@ function! UpdateRemotePlugins(...)
 endfunction
 
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
-
+"Plug 'folke/noice.nvim'
+"Plug 'MunifTanjim/nui.nvim'
+"Plug 'rcarriga/nvim-notify'
 
 "Plug 'smolck/command-completion.nvim', { 'branch': 'add-0.6-compat'}
 
@@ -192,8 +194,16 @@ Plug 'KaitlynEthylia/TreePin'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'danymat/neogen'
 
+" cargo install ast-grep
+Plug 'Marskey/telescope-sg'
+
+Plug 'jesseleite/nvim-macroni'
+
 call plug#end()
 
+" incsearch has troubles with wilder and anyway
+" it is not very useful.
+set noincsearch
 
 nnoremap <A-Up> <C-w>k
 nnoremap <A-Down> <C-w>j
@@ -209,6 +219,26 @@ inoremap <A-Up> <C-\><C-N><C-w>k
 inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
+
+-- require("noice").setup({
+--   lsp = {
+--     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+--     override = {
+--       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+--       ["vim.lsp.util.stylize_markdown"] = true,
+--       ["cmp.entry.get_documentation"] = true,
+--     },
+--   },
+--   -- you can enable a preset for easier configuration
+--   presets = {
+--     bottom_search = false, -- use a classic bottom cmdline for search
+--     command_palette = true, -- position the cmdline and popupmenu together
+--     long_message_to_split = true, -- long messages will be sent to a split
+--     inc_rename = false, -- enables an input dialog for inc-rename.nvim
+--     lsp_doc_border = false, -- add a border to hover docs and signature help
+--   },
+-- })
+
 require("lsp_lines").setup()
 require('neogen').setup {}
 require('treepin').setup {

@@ -246,6 +246,7 @@ require('telescope').load_extension('vim_bookmarks')
 require('telescope').load_extension('glyph')
 require('telescope').load_extension('emoji')
 require('telescope').load_extension('menufacture')
+require('telescope').load_extension('ast_grep')
 
 
 vim.keymap.set("n", '<space><space>', function() require("telescope.builtin").resume() end)
