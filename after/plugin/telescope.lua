@@ -226,8 +226,16 @@ find_files = {
           full_path = true,
 
           config_dir = "/home/milan/.mozilla/icecat/",
-    },
-  }
+        },
+        ast_grep = {
+            command = {
+                "sg",
+                "--json=stream",
+            }, -- must have --json=stream
+            grep_open_files = false, -- search in opened files
+            lang = nil, -- string value, specify language for ast-grep `nil` for default
+        }
+    }
 })
 
 -- Loading extensions must be done AFTER Telescope setup!
@@ -246,6 +254,7 @@ require('telescope').load_extension('vim_bookmarks')
 require('telescope').load_extension('glyph')
 require('telescope').load_extension('emoji')
 require('telescope').load_extension('menufacture')
+require('telescope').load_extension('ast_grep')
 
 
 vim.keymap.set("n", '<space><space>', function() require("telescope.builtin").resume() end)
