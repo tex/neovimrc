@@ -170,7 +170,9 @@ Plug 'prabirshrestha/async.vim'
 Plug 'notjedi/nvim-rooter.lua'
 
 " Obsoleted by its author
-Plug 'phaazon/mind.nvim'
+" Plug 'phaazon/mind.nvim'
+" Selyss picked up it:
+Plug 'Selyss/mind.nvim'
 
 Plug 'junegunn/rainbow_parentheses.vim'
 
@@ -334,9 +336,10 @@ endif
 let g:asyncrun_open = 6
 
 " This will jump to the last known cursor position
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+autocmd FileType <buffer> ++once
+      \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif
+autocmd BufRead *
+      \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif
 
 let g:bookmark_location_list = 1
 let g:bookmark_save_per_working_dir = 1
