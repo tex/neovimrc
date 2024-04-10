@@ -242,21 +242,6 @@ find_files = {
                     require('oil').open(directory)
                 end,
             }
-      },
-      bookmarks = {
-          selected_browser = 'firefox',
-
-          -- Either provide a shell command to open the URL
-          url_open_command = 'open',
-
-          -- Or provide the plugin name which is already installed
-          -- Available: 'vim_external', 'open_browser'
-          url_open_plugin = nil,
-
-          -- Show the full path to the bookmark instead of just the bookmark name
-          full_path = true,
-
-          config_dir = "/home/milan/.mozilla/icecat/",
         },
         ast_grep = {
             command = {
@@ -310,3 +295,9 @@ vim.keymap.set("n", '<space>/', function() require("telescope.builtin").current_
 vim.keymap.set('n', '<space>h', require('telescope').extensions.menufacture.live_grep)
 -- vim.keymap.set('n', '<leader>sw', require('telescope').extensions.menufacture.grep_string)
 
+require('browser_bookmarks').setup({
+  config_dir = "/home/milan/.mozilla/icecat/",
+  full_path = true,
+  selected_browser = "firefox",
+  url_open_command = "open"
+})
