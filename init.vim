@@ -170,7 +170,9 @@ Plug 'prabirshrestha/async.vim'
 Plug 'notjedi/nvim-rooter.lua'
 
 " Obsoleted by its author
-Plug 'phaazon/mind.nvim'
+" Plug 'phaazon/mind.nvim'
+" Selyss picked up it:
+Plug 'Selyss/mind.nvim'
 
 Plug 'junegunn/rainbow_parentheses.vim'
 
@@ -192,7 +194,8 @@ Plug 'kevinhwang91/nvim-bqf'
 Plug 'KaitlynEthylia/TreePin'
 
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
-Plug 'danymat/neogen'
+Plug 'tex/neogen'
+Plug 'Marskey/telescope-sg'
 
 " cargo install ast-grep
 Plug 'Marskey/telescope-sg'
@@ -240,7 +243,17 @@ lua << EOF
 -- })
 
 require("lsp_lines").setup()
-require('neogen').setup {}
+require('neogen').setup {
+  enabled = true,
+  languages = {
+    cpp = {
+      template = {
+        annotation_convention = "doxygen_cpp"
+      },
+    },
+  },
+}
+
 require('treepin').setup {
 	hide_onscreen = true, -- Hide's the pin buffer when the text of the pin is visible.
 	max_height = 30, -- Prevents the pin buffer from displaying when the pin is larger than x lines.
@@ -323,9 +336,10 @@ endif
 let g:asyncrun_open = 6
 
 " This will jump to the last known cursor position
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-endif
+autocmd FileType <buffer> ++once
+      \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif
+autocmd BufRead *
+      \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif
 
 let g:bookmark_location_list = 1
 let g:bookmark_save_per_working_dir = 1

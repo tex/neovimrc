@@ -1,6 +1,37 @@
 local actions = require("telescope.actions")
 local action_state = require('telescope.actions.state')
 local transform_mod = require("telescope.actions.mt").transform_mod
+local previewers = require "telescope.previewers"
+local conf = require("telescope.config").values
+
+local ns = vim.api.nvim_create_namespace("")
+
+local my_previewer = function()
+  local jump_to_line = function (self, bufnr, entry)
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+    vim.api.nvim_buf_add_highlight(bufnr, ns, "TelescopePreviewLine", entry.lnum-1, 0, -1)
+    pcall(vim.api.nvim_win_set_cursor, self.state.winid, { entry.lnum, 0 })
+    vim.api.nvim_buf_call(bufnr, function()
+      vim.cmd "norm! zt"
+    end)
+  end
+  return previewers.new_buffer_previewer {
+    title = "Test previewer",
+    get_buffer_by_name = function (self, entry)
+      return entry.path
+    end,
+    define_preview = function (self, entry)
+      local p = entry.path
+      return conf.buffer_previewer_maker(p, self.state.bufnr, {
+        bufname = self.state.bufname,
+        winid = self.state.winid,
+        callback = function(bufnr)
+          jump_to_line(self, bufnr, entry)
+        end,
+      })
+    end,
+  }
+end
 
 local bookmark_actions = require('telescope').extensions.vim_bookmarks.actions
 require('telescope').extensions.vim_bookmarks.all {
@@ -212,6 +243,14 @@ require'telescope'.setup({
                 end,
             }
         },
+        ast_grep = {
+            command = {
+                "sg",
+                "--json=stream",
+            }, -- must have --json=stream
+            grep_open_files = false, -- search in opened files
+            lang = nil, -- string value, specify language for ast-grep `nil` for default
+        }
     }
 })
 
@@ -244,11 +283,11 @@ require('telescope').load_extension('ast_grep')
 vim.keymap.set("n", '<space><space>', function() require("telescope.builtin").resume() end)
 vim.keymap.set("n", '<space>b', function() require("telescope.builtin").buffers() end)
 vim.keymap.set("n", '<space>m', function() require("telescope.builtin").oldfiles() end)
-vim.keymap.set('n', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({}) end)
-vim.keymap.set('n', '<space>gg', function() require("telescope").extensions.live_grep_args.live_grep_args({ cwd = vim.fn.input("Grep files Root > ", string.gsub(vim.fn.expand("%:h"), "oil://", ""), "dir") }) end)
-vim.keymap.set('n', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = vim.fn.expand("<cword>") }) end)
-vim.keymap.set('v', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = get_visual() }) end)
-vim.keymap.set('v', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({ default_text = get_visual() }) end)
+vim.keymap.set('n', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args() end)
+vim.keymap.set('n', '<space>gg', function() require("telescope").extensions.live_grep_args.live_grep_args({cwd = vim.fn.input("Grep files Root > ", string.gsub(vim.fn.expand("%:h"), "oil://", ""), "dir") }) end)
+vim.keymap.set('n', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({default_text = vim.fn.expand("<cword>") }) end)
+vim.keymap.set('v', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({default_text = get_visual() }) end)
+vim.keymap.set('v', '<space>G', function() require("telescope").extensions.live_grep_args.live_grep_args({default_text = get_visual() }) end)
 vim.keymap.set("n", '<space>\'', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set("i", '<A-\'>', function() require("telescope").extensions.yank_history.yank_history() end)
 vim.keymap.set('n', '<space>ff', function() require("telescope").extensions.menufacture.find_files({ cwd = vim.fn.input("Find files Root > ", string.gsub(vim.fn.expand("%:h"), "oil://", ""), "dir") }) end)
@@ -263,5 +302,4 @@ vim.keymap.set("n", '<space>/', function() require("telescope.builtin").current_
 
 vim.keymap.set('n', '<space>h', require('telescope').extensions.menufacture.live_grep)
 -- vim.keymap.set('n', '<leader>sw', require('telescope').extensions.menufacture.grep_string)
-
 
