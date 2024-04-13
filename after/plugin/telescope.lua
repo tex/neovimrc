@@ -255,6 +255,7 @@ vim.keymap.set('n', '<space>ff', function() require("telescope").extensions.menu
 vim.keymap.set('n', '<space>f', function() require("telescope").extensions.menufacture.find_files({ }) end)
 vim.keymap.set('n', '<space>F', function() require("telescope").extensions.menufacture.find_files({ search_file = vim.fn.expand("<cword>") }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
+vim.keymap.set("n", '<space>t', function() require("telescope").extensions.gtags.def() end)
 vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
