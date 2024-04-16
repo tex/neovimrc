@@ -157,76 +157,76 @@ end
 
 
 require'telescope'.setup({
-  defaults = {
-    generic_sorter = require('mini.fuzzy').get_telescope_sorter,
-    mappings = {
-      i = {
-        ['<C-j>']  = 'move_selection_next',
-        ['<C-k>']  = 'move_selection_previous',
-        ['<C-p>']  = 'cycle_history_prev',
-        ['<C-n>']  = 'cycle_history_next',
-        ['<C-b>']  = 'preview_scrolling_up',
-        ['<C-f>']  = 'preview_scrolling_down',
-        ['<C-q>']  = 'close',
-        ['<M-a>']  = 'toggle_all',
-        ['<M-q>']  = 'smart_send_to_qflist',
-        ['<M-Q>']  = 'smart_add_to_qflist',
-        ['<M-l>']  = 'smart_send_to_loclist',
-        ['<M-L>']  = 'smart_add_to_loclist',
-        ['<M-y>']  = 'open_qflist',
-        ['<C-a>']  = function() feedkeys('<Home>') end,
-        ['<C-e>']  = function() feedkeys('<End>') end,
-        --['<C-BS>'] = function() vim.api.nvim_input('<C-w>') end,
-        ['<C-u>']  = false,
-        ['<C-v>']  = stopinsert(custom_actions.multi_selection_open_vertical),
-        ['<C-s>']  = stopinsert(custom_actions.multi_selection_open_horizontal),
-        ['<C-t>']  = stopinsert(custom_actions.multi_selection_open_tab),
-        ['<CR>']   = stopinsert(custom_actions.multi_selection_open),
-      },
-      n = {
-        ['<C-q>'] = 'close',
-        ['<C-c>'] = 'close',
-        ["<C-v>"] = custom_actions.multi_selection_open_vertical,
-        ["<C-s>"] = custom_actions.multi_selection_open_horizontal,
-        ["<C-t>"] = custom_actions.multi_selection_open_tab,
-        ["<CR>"] = custom_actions.multi_selection_open,
-      }
+    defaults = {
+        generic_sorter = require('mini.fuzzy').get_telescope_sorter,
+        mappings = {
+            i = {
+                ['<C-j>']  = 'move_selection_next',
+                ['<C-k>']  = 'move_selection_previous',
+                ['<C-p>']  = 'cycle_history_prev',
+                ['<C-n>']  = 'cycle_history_next',
+                ['<C-b>']  = 'preview_scrolling_up',
+                ['<C-f>']  = 'preview_scrolling_down',
+                ['<C-q>']  = 'close',
+                ['<M-a>']  = 'toggle_all',
+                ['<M-q>']  = 'smart_send_to_qflist',
+                ['<M-Q>']  = 'smart_add_to_qflist',
+                ['<M-l>']  = 'smart_send_to_loclist',
+                ['<M-L>']  = 'smart_add_to_loclist',
+                ['<M-y>']  = 'open_qflist',
+                ['<C-a>']  = function() feedkeys('<Home>') end,
+                ['<C-e>']  = function() feedkeys('<End>') end,
+                --['<C-BS>'] = function() vim.api.nvim_input('<C-w>') end,
+                ['<C-u>']  = false,
+                ['<C-v>']  = stopinsert(custom_actions.multi_selection_open_vertical),
+                ['<C-s>']  = stopinsert(custom_actions.multi_selection_open_horizontal),
+                ['<C-t>']  = stopinsert(custom_actions.multi_selection_open_tab),
+                ['<CR>']   = stopinsert(custom_actions.multi_selection_open),
+            },
+            n = {
+                ['<C-q>'] = 'close',
+                ['<C-c>'] = 'close',
+                ["<C-v>"] = custom_actions.multi_selection_open_vertical,
+                ["<C-s>"] = custom_actions.multi_selection_open_horizontal,
+                ["<C-t>"] = custom_actions.multi_selection_open_tab,
+                ["<CR>"] = custom_actions.multi_selection_open,
+            }
+        },
+        layout_config = {
+            width = 0.9,
+            horizontal = {
+                preview_width = 80
+            }
+        },
+        selection_caret = '▶ ',
+        multi_icon = '',
+        path_display = { 'truncate' },
+        prompt_prefix = '   ',
+        no_ignore = true,
+        file_ignore_patterns = {
+            '%.git/', 'node_modules/', '%.npm/', '__pycache__/', '%[Cc]ache/',
+            '%.dropbox/', '%.dropbox_trashed/', '%.local/share/Trash/', '%.py[c]',
+            '%.sw.?', '~$', '%.tags', '%.gemtags', '%.csv$', '%.tsv$', '%.tmp',
+            '%.plist$', '%.pdf$', '%.jpg$', '%.JPG$', '%.jpeg$', '%.png$',
+            '%.class$', '%.pdb$', '%.dll$'
+        }
     },
-    layout_config = {
-      width = 0.9,
-      horizontal = {
-        preview_width = 80
-      }
-    },
-    selection_caret = '▶ ',
-    multi_icon = '',
-    path_display = { 'truncate' },
-    prompt_prefix = '   ',
-    no_ignore = true,
-    file_ignore_patterns = {
-      '%.git/', 'node_modules/', '%.npm/', '__pycache__/', '%[Cc]ache/',
-      '%.dropbox/', '%.dropbox_trashed/', '%.local/share/Trash/', '%.py[c]',
-      '%.sw.?', '~$', '%.tags', '%.gemtags', '%.csv$', '%.tsv$', '%.tmp',
-      '%.plist$', '%.pdf$', '%.jpg$', '%.JPG$', '%.jpeg$', '%.png$',
-      '%.class$', '%.pdb$', '%.dll$'
-    }
-  },
-  pickers = {
-find_files = {
+    pickers = {
+        find_files = {
             find_command = { "fd", "--color", "never" }
         },
-    -- find_files = { mappings = telescope_multiselect_mappings },
-    -- grep_string = { mappings = telescope_multiselect_mappings }
-    quickfix             = picker_default_config,
-    tagstack             = picker_default_config,
-    jumplist             = picker_default_config,
-    lsp_references       = picker_default_config,
-    lsp_definitions      = picker_default_config,
-    lsp_type_definitions = picker_default_config,
-    lsp_implementations  = picker_default_config,
-  },
-  extensions = {
-      cder = {
+        -- find_files = { mappings = telescope_multiselect_mappings },
+        -- grep_string = { mappings = telescope_multiselect_mappings }
+        quickfix             = picker_default_config,
+        tagstack             = picker_default_config,
+        jumplist             = picker_default_config,
+        lsp_references       = picker_default_config,
+        lsp_definitions      = picker_default_config,
+        lsp_type_definitions = picker_default_config,
+        lsp_implementations  = picker_default_config,
+    },
+    extensions = {
+        cder = {
             dir_command = { 'fd', '--type=d', '.' },
             entry_maker = function(line)
                 return {
@@ -252,6 +252,13 @@ find_files = {
             lang = nil, -- string value, specify language for ast-grep `nil` for default
         }
     }
+})
+
+require('browser_bookmarks').setup({
+  config_dir = "/home/milan/.mozilla/icecat/",
+  full_path = true,
+  selected_browser = "firefox",
+  url_open_command = "open"
 })
 
 -- Loading extensions must be done AFTER Telescope setup!
@@ -287,6 +294,7 @@ vim.keymap.set('n', '<space>ff', function() require("telescope").extensions.menu
 vim.keymap.set('n', '<space>f', function() require("telescope").extensions.menufacture.find_files({ }) end)
 vim.keymap.set('n', '<space>F', function() require("telescope").extensions.menufacture.find_files({ search_file = vim.fn.expand("<cword>") }) end)
 vim.keymap.set("n", '<space>d', function() require("telescope").extensions.cder.cder() end)
+vim.keymap.set("n", '<space>t', function() require("telescope").extensions.gtags.def() end)
 vim.keymap.set("n", 'gd', function() require("telescope").extensions.gtags.def({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'gr', function() require("telescope").extensions.gtags.ref({symbol = vim.fn.expand("<cword>")}) end)
 vim.keymap.set("n", 'z=', function() require("telescope.builtin").spell_suggest() end)
