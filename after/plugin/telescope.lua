@@ -200,7 +200,7 @@ require'telescope'.setup({
         },
         selection_caret = '▶ ',
         multi_icon = '',
-        path_display = { 'truncate' },
+        -- path_display = { 'truncate' },
         prompt_prefix = '   ',
         no_ignore = true,
         file_ignore_patterns = {
@@ -209,7 +209,8 @@ require'telescope'.setup({
             '%.sw.?', '~$', '%.tags', '%.gemtags', '%.csv$', '%.tsv$', '%.tmp',
             '%.plist$', '%.pdf$', '%.jpg$', '%.JPG$', '%.jpeg$', '%.png$',
             '%.class$', '%.pdb$', '%.dll$'
-        }
+        },
+        path_display = { 'filename_first', },
     },
     pickers = {
         find_files = {
