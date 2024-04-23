@@ -30,8 +30,8 @@ require('oil').setup {
   keymaps = {
     ["g?"] = "actions.show_help",
     ["<CR>"] = "actions.select",
-    ["s"] = "actions.select_vsplit",
-    ["S"] = "actions.select_split",
+    ["<C-v>"] = "actions.select_vsplit",
+    ["<C-s>"] = "actions.select_split",
     ["<C-p>"] = "actions.preview",
     ["-"] = "actions.close",
     ["<M-->"] = "actions.close",
@@ -60,6 +60,4 @@ require('oil').setup {
     },
   },
 }
-
-vim.keymap.set('n', '<M-->', function() require('oil').open() end)
 
