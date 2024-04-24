@@ -18,7 +18,16 @@ require 'triptych'.setup {
     quit = { 'q', '-' },
     toggle_hidden = 'g.',
   },
-  extension_mappings = {},
+  extension_mappings = {
+        ['<space>gg'] = {
+          mode = 'n',
+          fn = function(target)
+            require 'telescope.builtin'.live_grep {
+              search_dirs = { vim.fn.input("Find files Root > ", target.dirname) }
+            }
+          end
+        }
+  },
   options = {
     dirs_first = true,
     show_hidden = false,
