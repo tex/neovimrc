@@ -15,7 +15,7 @@ require 'triptych'.setup {
     rename = 'r',
     cut = 'x',
     paste = 'p',
-    quit = { 'q', '-' },
+    quit = { '<Esc>', 'q', '-' },
     toggle_hidden = 'g.',
   },
   extension_mappings = {
