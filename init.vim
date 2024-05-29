@@ -70,7 +70,7 @@ Plug 'hrsh7th/vim-vsnip-integ'
 "Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
 " Magit for neovim
-Plug 'TimUntersberger/neogit'
+Plug 'TimUntersberger/neogit', { 'tag': 'v0.0.1' }
 Plug 'tpope/vim-fugitive'
 Plug 'rbong/vim-flog'
 Plug 'idanarye/vim-merginal'
@@ -102,6 +102,7 @@ Plug 'theblob42/drex.nvim'
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 "   Plug 'MunifTanjim/nui.nvim'
 Plug 'simonmclean/triptych.nvim'
+Plug 'Rizwanelansyah/simplyfile.nvim'
 
 "Plug 'sainnhe/edge'
 "Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
@@ -175,7 +176,7 @@ Plug 'notjedi/nvim-rooter.lua'
 " Selyss picked up it:
 Plug 'Selyss/mind.nvim'
 
-Plug 'junegunn/rainbow_parentheses.vim'
+"Plug 'junegunn/rainbow_parentheses.vim'
 
 Plug 'RaafatTurki/hex.nvim'
 
@@ -203,6 +204,7 @@ Plug 'Marskey/telescope-sg'
 
 Plug 'jesseleite/nvim-macroni'
 
+Plug 'camspiers/snap'
 call plug#end()
 
 " incsearch has troubles with wilder and anyway
@@ -224,6 +226,92 @@ inoremap <A-Right> <C-\><C-N><C-w>l
 
 lua << EOF
 
+require("simplyfile").setup {
+    border = {
+        left = "rounded",
+        main = "double",
+        right = "rounded",
+    },
+    derfault_keymaps = true,
+    keymaps = {
+        --- your custom keymaps
+        --- {dir} have following field
+        --- name: name of file/folder
+        --- absolute: absolute path of file/folder
+        --- icon: the nerd fonts icon
+        --- hl: highlight group name for icon
+        --- filetype: type of file
+        --- is_folder: folder or not
+        ["lhs"] = function(dir) --[[ some code ]] end
+    }
+}
+
+
+
+pcall(require, 'luarocks.loader')
+local snap = require'snap'
+
+snap.register.map({"n"}, {"<Leader>ft"}, function ()
+  snap.run {
+    producer = snap.get'producer.tags.symbol',
+    prompt = "tag completion>",
+    steps = {{
+      consumer = snap.get'consumer.fzy',
+      config = {prompt = "tag fzy>", initial_filter = snap.get'producer.tags.filter-mod'}
+    }},
+    select = function (result)
+      snap.run {
+        producer = snap.get'producer.tags.def',
+        initial_filter = tostring(result),
+        prompt = "tag def>",
+        steps = {{
+          consumer = snap.get'consumer.fzy',
+          config = {prompt = "tag fzy>", initial_filter = ""}
+        }},
+        select = snap.get'select.grep'.select,
+        multiselect = snap.get'select.grep'.multiselect,
+        views = {snap.get'preview.grep'},
+      } end,
+  }
+end)
+
+snap.register.map({"n"}, {"<Leader>fd"}, function ()
+  snap.run {
+    producer = snap.get'producer.tags.def',
+    prompt = "tag def>",
+    steps = {{
+      consumer = snap.get'consumer.fzy',
+      config = {prompt = "tag fzy>"}
+    }},
+    select = snap.get'select.grep'.select,
+    multiselect = snap.get'select.grep'.multiselect,
+    views = {snap.get'preview.grep'},
+  }
+end)
+
+
+snap.register.map({"n"}, {"<Leader><Leader>"}, function ()
+  snap.run {
+    producer = snap.get'consumer.fzy'(snap.get'producer.ripgrep.file'),
+    select = snap.get'select.file'.select,
+    multiselect = snap.get'select.vimgrep'.multiselect,
+    views = {snap.get'preview.file'},
+  }
+end)
+
+snap.register.map({"n"}, {"<Leader>_"}, function ()
+  snap.run{
+    producer = snap.get'consumer.fzy'(snap.get'producer.vim.currentbuffer'),
+    select = snap.get'select.vim.currentbuffer'.select
+  }
+end)
+
+snap.maps {
+  -- {"<Leader><Leader>", snap.config.file {producer = "ripgrep.file"}},
+  {"<Leader>fb", snap.config.file {producer = "vim.buffer"}},
+  {"<Leader>fo", snap.config.file {producer = "vim.oldfile", filter_with = "cword" }},
+  {"<Leader>ff", snap.config.vimgrep { filter_with = "cword" }},
+}
 -- require("noice").setup({
 --   lsp = {
 --     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -376,9 +464,9 @@ set nobackup
 " Disable 'swap files' (eg. .myfile.txt.swp) from being created
 set noswapfile
 
-let g:rainbow#max_level = 16
-let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
-au VimEnter * RainbowParentheses
+"let g:rainbow#max_level = 16
+"let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+"au VimEnter * RainbowParentheses
 
 set undofile
 
