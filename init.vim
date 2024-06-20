@@ -203,7 +203,7 @@ Plug 'Marskey/telescope-sg'
 
 Plug 'jesseleite/nvim-macroni'
 
-Plug 'camspiers/snap'
+Plug 'tex/snap', {'branch': 'tags'}
 call plug#end()
 
 " incsearch has troubles with wilder and anyway
@@ -448,12 +448,46 @@ lua << EOF
 
 pcall(require, 'luarocks.loader')
 local snap = require'snap'
+
+local tbl = require("snap.common.tbl")
+-- Here we are storing the old version of snap.run
+local run = snap.run
+-- Here we will store each config that is passed to snap.run
+local last_config = nil
+-- Here we are overriding snap.run, this isn't the most sane thing to do but it will work
+snap.run = function(config)
+  last_config = config
+  local function on_update(filter)
+    if config.on_update then
+      config.on_update(filter)
+    end
+    last_config.initial_filter = filter
+  end
+  run(tbl.merge(config, { on_update = on_update }))
+end
+
+-- Now all usages of snap.run use the above definition and have their config stored, whether they are generated from snap.config, or just plain invocations of snap.run
+
+-- So you can now do all your setups as normal, but you can additionally now register a "last search" style setup
+
+snap.maps({
+  {
+    "<Leader>i",
+    function ()
+      if last_config then
+        snap.run(last_config)
+      end
+    end
+  }
+})
+
 snap.register.map({"n"}, {"<Leader>ft"}, function ()
   snap.run {
     producer = snap.get'consumer.positions'(
                 snap.get'consumer.score'(
                   snap.get'producer.tags.symbol')),
     prompt = "tag completion>",
+    initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),
     steps = {{
       consumer = snap.get'consumer.fzy',
       config = {prompt = "tag fzy>", initial_filter = function (filter) return string.gsub(filter, "%%", "") end}
@@ -465,7 +499,7 @@ snap.register.map({"n"}, {"<Leader>ft"}, function ()
         prompt = "tag def>",
         steps = {{
           consumer = snap.get'consumer.fzy',
-          config = {prompt = "tag fzy>"}
+          config = {prompt = "tag fzy>", initial_filter = ""}
         }},
         select = snap.get'select.grep'.select,
         multiselect = snap.get'select.grep'.multiselect,
@@ -482,7 +516,7 @@ snap.register.map({"n"}, {"<Leader>fd"}, function ()
     initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),
     steps = {{
       consumer = snap.get'consumer.fzy',
-      config = {prompt = "tag fzy>"}
+      config = {prompt = "tag fzy>", initial_filter = ""}
     }},
     select = snap.get'select.grep'.select,
     multiselect = snap.get'select.grep'.multiselect,
@@ -498,7 +532,7 @@ snap.register.map({"n"}, {"<Leader>fr"}, function ()
     initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),
     steps = {{
       consumer = snap.get'consumer.fzy',
-      config = {prompt = "tag fzy>"}
+      config = {prompt = "tag fzy>", initial_filter = function (filter) return "" end}
     }},
     select = snap.get'select.grep'.select,
     multiselect = snap.get'select.grep'.multiselect,
@@ -631,10 +665,11 @@ set guifont=FiraCode\ Nerd\ Font\ Mono:h14
 
 set mouse=a
 
-let g:nvcode_termcolors=256
+"let g:nvcode_termcolors=256
 
-let g:moonflyNormalFloat = 1
-colorscheme moonfly " nvcode " Or whatever colorscheme you make
+"let g:moonflyNormalFloat = 1
+"colorscheme moonfly " nvcode " Or whatever colorscheme you make
+colorscheme delek
 
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
