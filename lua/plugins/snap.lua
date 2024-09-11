@@ -87,8 +87,8 @@ return {
 			desc = "grep buffer",
 		},
 		{ "<Leader>fb", function () require'snap'.config.file {producer = "vim.buffer"}() end, desc = "buffers" },
-		{ "<Leader>fo", function () require'snap'.config.file {producer = "vim.oldfile", filter_with = "cword" }() end, desc = "old files" },
-		{ "<Leader>ff", function () require'snap'.config.vimgrep { filter_with = "cword" }() end, desc = "grep files with cword"},
+		{ "<Leader>fo", function () require'snap'.config.file {producer = "vim.oldfile"}() end, desc = "old files" },
+		{ "<Leader>ff", function () require'snap'.config.vimgrep {filter_with = "cword"}() end, desc = "grep files with cword"},
 	},
 	config = function()
 		-- this is needed for fzy

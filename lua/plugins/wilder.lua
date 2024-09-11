@@ -2,11 +2,12 @@ return {
   'gelguy/wilder.nvim',
   lazy = false,
   enabled = true,
-  build = { ':UpdateRemotePlugins' }, 
+  build = ':UpdateRemotePlugins',
+  keys = { ':', '/', '?' },
   config = function()
     local wilder = require('wilder')
     wilder.setup({modes = {':', '/', '?'}})
-    
+
     wilder.set_option('pipeline', {
       wilder.branch(
         wilder.python_file_finder_pipeline({

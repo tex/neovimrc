@@ -171,4 +171,7 @@ return {
 			'prabirshrestha/async.vim',
 		},
 	},
+  {
+    'tpope/vim-fugitive',
+  },
 }
