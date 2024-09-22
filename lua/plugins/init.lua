@@ -174,4 +174,9 @@ return {
   {
     'tpope/vim-fugitive',
   },
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = true
+  },
 }
