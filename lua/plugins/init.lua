@@ -171,6 +171,7 @@ return {
 			'prabirshrestha/async.vim',
 		},
 	},
+  { 'skywind3000/asyncrun.vim' },
   {
     'tpope/vim-fugitive',
   },
