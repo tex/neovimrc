@@ -161,6 +161,7 @@ return {
 			'prabirshrestha/async.vim',
 		},
 	},
+  { 'skywind3000/asyncrun.vim' },
   {
     'tpope/vim-fugitive',
   },
@@ -172,5 +173,10 @@ return {
   },
   {
     'rbong/vim-flog'
-  }
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = true
+  },
 }
