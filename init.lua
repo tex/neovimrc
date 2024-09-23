@@ -66,7 +66,7 @@ wk.add({
 -- To simulate |i_CTRL-R| in terminal-mode
 vim.cmd("tnoremap <expr> <C-R> '<C-\\><C-N>\"'.nr2char(getchar()).'pi'")
 
--- To close temrinal of finished commands. Useful when using delta for diffs
+-- To close terminal of finished commands. Useful when using delta for diffs
 vim.api.nvim_create_autocmd(
 {'TermClose'}, {
 	pattern = {'*'},
@@ -74,6 +74,8 @@ vim.api.nvim_create_autocmd(
 		vim.cmd("execute 'bdelete! ' . expand('<abuf>')")
 	end
 })
+
+--vim.api.nvim_create_autocmd( {'QuickFixCmdPost'}, { pattern = {'*'}, callback = function () vim.cmd("botright copen 8") end})
 
 vim.api.nvim_create_autocmd(
     {'BufReadPost'}, {
