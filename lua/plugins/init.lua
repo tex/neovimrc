@@ -84,7 +84,26 @@ return {
 			{ mode = { "n", "x" }, "<localleader>sr", function() require("ssr").open() end },
 		},
 	},
-	{
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({
+        -- ... options, see Configuration section below ...
+        -- ... there are no required options atm...
+        engine = 'astgrep', -- 'ripgrep' is default, but 'astgrep' can be specified...
+      });
+    end
+  },
+  {
+    'dyng/ctrlsf.vim'
+  },
+  {
+    'nvim-pack/nvim-spectre'
+  },
+  {
+    'gabrielpoca/replacer.nvim'
+  },
+  {
 		-- Finds root folder of current file
 		'notjedi/nvim-rooter.lua',
 		opts = {
@@ -124,35 +143,6 @@ return {
 		},
 	},
 	{
-		'anuvyklack/windows.nvim',
-		dependencies = {
-			'anuvyklack/middleclass',
-			'anuvyklack/animation.nvim',
-		},
-		opts = {
-			autowidth = {
-				enable = false,
-				winwidth = 5,
-				filetype = {
-					help = 2,
-				},
-			},
-			ignore = {
-				buftype = { "quickfix" },
-				filetype = { "NvimTree", "neo-tree", "undotree", "NeogitStatus" }
-			},
-			animation = {
-				enable = true,
-				duration = 300,
-				fps = 30,
-				easing = "in_out_sine"
-			}
-		},
-		keys = {
-			{'<C-w>_', '<Cmd>WindowsMaximize<CR>'}
-		},
-	},
-	{
 		'nvim-lualine/lualine.nvim',
 		opts = {
 			sections = {
@@ -174,4 +164,13 @@ return {
   {
     'tpope/vim-fugitive',
   },
+  {
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  },
+  {
+    'rbong/vim-flog'
+  }
 }

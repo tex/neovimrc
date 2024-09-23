@@ -51,8 +51,7 @@ return {
 		{ "<Leader>fr", function ()
 				local snap = require'snap'
 				snap.run {
-					producer = snap.get'consumer.score'(
-					snap.get'producer.tags.ref'),
+					producer = snap.get'consumer.score'(snap.get'producer.tags.ref'),
 					prompt = "tag ref>",
 					initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),
 					steps = {{
@@ -69,7 +68,8 @@ return {
 		{ "<Leader><Leader>", function ()
 				local snap = require'snap'
 				snap.run {
-					producer = snap.get'consumer.fzy'(snap.get'producer.ripgrep.file'),
+					--producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.fd.file')),
+					producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.ripgrep.file')),
 					select = snap.get'select.file'.select,
 					multiselect = snap.get'select.vimgrep'.multiselect,
 					views = {snap.get'preview.file'},
@@ -87,8 +87,22 @@ return {
 			desc = "grep buffer",
 		},
 		{ "<Leader>fb", function () require'snap'.config.file {producer = "vim.buffer"}() end, desc = "buffers" },
-		{ "<Leader>fo", function () require'snap'.config.file {producer = "vim.oldfile"}() end, desc = "old files" },
-		{ "<Leader>ff", function () require'snap'.config.vimgrep {filter_with = "cword"}() end, desc = "grep files with cword"},
+		{ "<Leader>fo", function () require'snap'.config.file {producer = "vim.oldfile" }() end, desc = "old files" },
+		{ "<Leader>ff", function ()
+				local snap = require'snap'
+				snap.run {
+					producer = (snap.get'producer.ripgrep.vimgrep'),
+					prompt = "grep>",
+					initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),
+					steps = {{
+						consumer = snap.get'consumer.fzy',
+						config = {prompt = "tag fzy>", initial_filter = function (filter) return "" end}
+					}},
+					select = snap.get'select.vimgrep'.select,
+					multiselect = snap.get'select.vimgrep'.multiselect,
+					views = {snap.get'preview.vimgrep'},
+				}
+      end, desc = "grep files with cword"},
 	},
 	config = function()
 		-- this is needed for fzy

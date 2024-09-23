@@ -1,10 +1,13 @@
 return {
 	{
 		'stevearc/oil.nvim',
+    lazy = false,
+    enabled = true,
 		keys = {
 			{'<M-->', function() require('oil').open() end},
 		},
 		opts = { 
+      default_file_explorer = true,
 			-- Id is automatically added at the beginning, and name at the end
 			-- See :help oil-columns
 			columns = {
