@@ -179,4 +179,7 @@ return {
     version = "*",
     config = true
   },
+  { 'dhruvasagar/vim-table-mode',
+    keys = { { "<localleader>tm", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
+    },
 }
