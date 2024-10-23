@@ -35,6 +35,7 @@ return {
 			auto_enable = true,
 			auto_resize_height = true, -- highly recommended enable
 			preview = {
+                auto_preview = false,
 				win_height = 12,
 				win_vheight = 12,
 				delay_syntax = 80,
@@ -182,4 +183,5 @@ return {
   { 'dhruvasagar/vim-table-mode',
     keys = { { "<localleader>tm", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
     },
+  { 'stefandtw/quickfix-reflector.vim', },
 }
