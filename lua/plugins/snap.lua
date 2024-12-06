@@ -73,6 +73,10 @@ return {
 					select = snap.get'select.file'.select,
 					multiselect = snap.get'select.vimgrep'.multiselect,
 					views = {snap.get'preview.file'},
+                    layout = function()
+                        local fn = snap.get'layout'['%centered']
+                        return fn(1.0, 1.0)
+                    end,
 				}
 			end,
 			desc = "find files",

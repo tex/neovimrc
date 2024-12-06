@@ -29,6 +29,7 @@ return {
 			{ "<localleader>a", '<cmd>AerialToggle!<CR>', desc = "Aerial toggle" },
 		},
 	},
+    -- { 'stefandtw/quickfix-reflector.vim', },
 	{
 		'kevinhwang91/nvim-bqf',
 		opts = {
@@ -183,5 +184,14 @@ return {
   { 'dhruvasagar/vim-table-mode',
     keys = { { "<localleader>tm", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
     },
-  { 'stefandtw/quickfix-reflector.vim', },
+    {
+    -- Nice multiple marks with \m
+    'inkarkat/vim-mark',
+    dependencies = { 'inkarkat/vim-ingo-library' }
+    },
+    {
+    -- Nice bookmarks with mm, mi, mc, ma
+    'MattesGroeger/vim-bookmarks',
+    -- dependencies = {'tom-anders/telescope-vim-bookmarks.nvim'}
+    },
 }
