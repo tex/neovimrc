@@ -61,6 +61,8 @@ wk.add({
 
 	-- To map <Esc> to exit terminal-mode
 	{ mode = "t", "<Esc>", "<C-\\><C-n>" },
+
+    { mode = "i", "<c-w>", "<c-s-w>" },
 })
 
 -- To simulate |i_CTRL-R| in terminal-mode
