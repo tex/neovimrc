@@ -10,7 +10,20 @@ return {
   enabled = true,
   build = function () require("gitlab.server").build(true) end, -- Builds the Go binary
   config = function()
-    require("gitlab").setup()
+    require("gitlab").setup({
+      discussion_signs = {
+        enabled = true, -- Show diagnostics for gitlab comments in the reviewer
+        skip_resolved_discussion = false, -- Show diagnostics for resolved discussions
+        severity = vim.diagnostic.severity.INFO, -- ERROR, WARN, INFO, or HINT
+        virtual_text = true, -- Whether to show the comment text inline as floating virtual text
+        use_diagnostic_signs = true, -- Show diagnostic sign (depending on the `severity` setting, e.g., I for INFO) along with the comment icon
+        priority = 100, -- Higher will override LSP warnings, etc
+        icons = {
+          comment = "→|",
+          range = " |",
+        },
+      },
+    })
     local gitlab = require("gitlab")
     local gitlab_server = require("gitlab.server")
     local wk = require("which-key")
