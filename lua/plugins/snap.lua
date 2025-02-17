@@ -68,14 +68,14 @@ return {
 		{ "<Leader><Leader>", function ()
 				local snap = require'snap'
 				snap.run {
-					--producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.fd.file')),
-					producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.ripgrep.file')),
+					producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.fd.file')),
+					--producer = snap.get'consumer.fzy'(snap.get'consumer.cache'(snap.get'producer.ripgrep.file')),
 					select = snap.get'select.file'.select,
 					multiselect = snap.get'select.vimgrep'.multiselect,
 					views = {snap.get'preview.file'},
                     layout = function()
                         local fn = snap.get'layout'['%centered']
-                        return fn(1.0, 1.0)
+                        return fn(0.95, 0.8)
                     end,
 				}
 			end,

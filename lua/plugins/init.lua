@@ -1,5 +1,7 @@
 return {
+    {
 	"folke/lazydev.nvim",
+    },
 	{
 		"folke/which-key.nvim",
 		enabled = 1,
@@ -10,6 +12,9 @@ return {
 			"nvim-treesitter"
 		},
 	},
+    {
+        "andrewferrier/wrapping.nvim",
+    },
 	{
 		'stevearc/aerial.nvim', -- outline (list of functions, chapters, ...)
 		dependencies = {
@@ -169,9 +174,11 @@ return {
   },
   {
     'tanvirtin/vgit.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    }
+    dependencies = {
+      'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons'
+    },
+    event = 'VimEnter',
+    config = function() require('vgit').setup() end,
   },
   {
     'rbong/vim-flog'

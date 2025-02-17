@@ -3,7 +3,15 @@ return {
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
+        { "sindrets/diffview.nvim",
+            config = function()
+                require("diffview").setup({
+                    view = { default = { layout = "diff2_vertical" } },
+                    merge_tool = { layout = "diff3_vertical" },
+                    file_history = { layout = "diff2_vertical" },
+                })
+            end,
+        },
     "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
     "nvim-tree/nvim-web-devicons" -- Recommended but not required. Icons in discussion tree.
   },
@@ -11,6 +19,9 @@ return {
   build = function () require("gitlab.server").build(true) end, -- Builds the Go binary
   config = function()
     require("gitlab").setup({
+      debug = { request = true, response = true, gitlab_request = true, gitlab_response = true, },
+      log_path = "/home/msvobod/gitlab.nvim.log", -- Log path for the Go server
+      keymaps = { discussion_tree = { refresh_data = "<leader>r" } },
       discussion_signs = {
         enabled = true, -- Show diagnostics for gitlab comments in the reviewer
         skip_resolved_discussion = false, -- Show diagnostics for resolved discussions
