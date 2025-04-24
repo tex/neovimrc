@@ -45,6 +45,8 @@ return {
 				["-"] = "actions.close",
 				["<M-->"] = "actions.close",
 				["<C-r>"] = "actions.refresh",
+                ["<Left>"] = "actions.parent",
+                ["<Right>"] = "actions.select",
 				["<BS>"] = "actions.parent",
 				["gc"] = "actions.open_cwd",
 				["`"] = "actions.cd",

@@ -2,10 +2,10 @@ return {
     {
 	"folke/lazydev.nvim",
     },
-	{
-		"folke/which-key.nvim",
+  {
+  	"folke/which-key.nvim",
 		enabled = 1,
-	},
+  },
 	{
 		'andymass/vim-matchup',
 		dependencies = {
@@ -34,7 +34,7 @@ return {
 			{ "<localleader>a", '<cmd>AerialToggle!<CR>', desc = "Aerial toggle" },
 		},
 	},
-    -- { 'stefandtw/quickfix-reflector.vim', },
+  -- { 'stefandtw/quickfix-reflector.vim', },
 	{
 		'kevinhwang91/nvim-bqf',
 		opts = {
@@ -201,4 +201,16 @@ return {
     'MattesGroeger/vim-bookmarks',
     -- dependencies = {'tom-anders/telescope-vim-bookmarks.nvim'}
     },
+
+    {
+      'Joakker/lua-json5',
+      build = './install.sh'
+    },
+
+{
+  'stevearc/overseer.nvim',
+  opts = {},
+},
+
+
 }
