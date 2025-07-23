@@ -100,13 +100,13 @@ require("config.lazy")
      end
  })
  
- vim.keymap.set("c", "<space>", function()
-   local mode = vim.fn.getcmdtype()
-     if mode == "?" or mode == "/" then
-       return ".*"
-     else
-       return " "
-     end
-   end, { expr = true })
+--vim.keymap.set("c", "<space>", function()
+--  local mode = vim.fn.getcmdtype()
+--    if mode == "?" or mode == "/" then
+--      return ".*"
+--    else
+--      return " "
+--    end
+--  end, { expr = true })
 
 

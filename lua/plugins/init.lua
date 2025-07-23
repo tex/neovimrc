@@ -211,6 +211,10 @@ return {
   'stevearc/overseer.nvim',
   opts = {},
 },
-
+    {
+'glts/vim-radical', -- Show and convert hex, dec, bin, oct: gA crd crx crb cro
+dependencies = { 'glts/vim-magnum' },
+    },
+{ 'echasnovski/mini.files', version = false },
 
 }

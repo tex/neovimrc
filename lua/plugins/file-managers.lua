@@ -52,6 +52,7 @@ return {
 				["`"] = "actions.cd",
 				["~"] = "actions.tcd",
 				["g."] = "actions.toggle_hidden",
+                ["gs"] = { "actions.change_sort", mode = "n" },
 			},
 			-- Set to false to disable all of the above keymaps
 			use_default_keymaps = false,
@@ -154,6 +155,14 @@ return {
 				enabled = false,
 			}
 		}
-}
+},
+    {
+"A7Lavinraj/fyler.nvim",
+         dependencies = { "echasnovski/mini.icons" },
+  branch = "stable",
+  opts = { mappings = {
+    explorer = { n = { ["<Right>"] = "Select", } }
+        } }
+    },
 }
 

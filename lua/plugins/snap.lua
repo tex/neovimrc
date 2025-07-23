@@ -1,6 +1,23 @@
 return {
 	"tex/snap",
 	keys = {
+		{ "<leader>fs", function ()
+			local snap = require'snap'
+					snap.run {
+						producer = snap.get'producer.tags.symbol',
+						initial_filter = "",
+						prompt = "tag sym>",
+						steps = {{
+							consumer = snap.get'consumer.fzy',
+							config = {prompt = "tag fzy>", initial_filter = ""}
+						}},
+						select = snap.get'select.grep'.select,
+						multiselect = snap.get'select.grep'.multiselect,
+						views = {snap.get'preview.grep'},
+					}
+			end,
+			desc = "tag completion",
+		},
 		{ "<leader>ft", function ()
 			local snap = require'snap'
 			snap.run {
