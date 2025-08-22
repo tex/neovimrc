@@ -172,14 +172,14 @@ return {
   {
     'tpope/vim-fugitive',
   },
-  {
-    'tanvirtin/vgit.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons'
-    },
-    event = 'VimEnter',
-    config = function() require('vgit').setup() end,
-  },
+--  {
+--    'tanvirtin/vgit.nvim',
+--    dependencies = {
+--      'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons'
+--    },
+--    event = 'VimEnter',
+--    config = function() require('vgit').setup() end,
+--  },
   {
     'rbong/vim-flog'
   },
@@ -217,4 +217,17 @@ dependencies = { 'glts/vim-magnum' },
     },
 { 'echasnovski/mini.files', version = false },
 
+{
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         -- required
+    "sindrets/diffview.nvim",        -- optional - Diff integration
+
+    -- Only one of these is needed.
+    --"nvim-telescope/telescope.nvim", -- optional
+    --"ibhagwan/fzf-lua",              -- optional
+    --"echasnovski/mini.pick",         -- optional
+    "folke/snacks.nvim",             -- optional
+  },
+},
 }
