@@ -44,6 +44,7 @@ return {
                 auto_preview = false,
 				win_height = 12,
 				win_vheight = 12,
+                winblend = 0,
 				delay_syntax = 80,
 				border = {'┏', '━', '┓', '┃', '┛', '━', '┗', '┃'},
 				show_title = false,
