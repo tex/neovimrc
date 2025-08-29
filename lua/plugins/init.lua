@@ -30,7 +30,14 @@ return {
 		},
 	},
     -- { 'stefandtw/quickfix-reflector.vim', },
-	{
+{
+  'stevearc/quicker.nvim',
+  event = "FileType qf",
+  ---@module "quicker"
+  ---@type quicker.SetupOptions
+  opts = {},
+},
+  {
 		'kevinhwang91/nvim-bqf',
 		opts = {
 			auto_enable = true,
@@ -167,31 +174,150 @@ return {
   {
     'tpope/vim-fugitive',
   },
-  {
-    'tanvirtin/vgit.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    }
-  },
+-- {
+--   'tanvirtin/vgit.nvim',
+--   requires = {
+--     'nvim-lua/plenary.nvim'
+--   }
+-- },
   {
     'rbong/vim-flog'
   },
+  {
+       'sindrets/diffview.nvim'
+  },
+{
+  "NeogitOrg/neogit",
+  dependencies = {
+    "nvim-lua/plenary.nvim",         -- required
+    "sindrets/diffview.nvim",        -- optional - Diff integration
+
+    -- Only one of these is needed.
+    --"nvim-telescope/telescope.nvim", -- optional
+    --"ibhagwan/fzf-lua",              -- optional
+    "echasnovski/mini.pick",         -- optional
+    --"folke/snacks.nvim",             -- optional
+  },
+},
   {
     'akinsho/toggleterm.nvim',
     version = "*",
     config = true
   },
   { 'dhruvasagar/vim-table-mode',
-    keys = { { "<localleader>tm", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
-    },
-    {
-    -- Nice multiple marks with \m
+    keys = { { "<localleader>t", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
+  },
+  {
     'inkarkat/vim-mark',
-    dependencies = { 'inkarkat/vim-ingo-library' }
+    init = function()
+        vim.g.mw_no_mappings = true
+    end,
+    keys = {
+            { mode = { "n" }, desc = "MarkSet", "<Leader>mm", "<Plug>MarkSet" },
+            { mode = { "n" }, desc = "MarkPartialWord", "<Leader>mp", "<Plug>MarkPartialWord" },
+            { mode = { "x" }, desc = "MarkSet", "<Leader>mm", "<Plug>MarkSet" },
+            { mode = { "n" }, desc = "MarkRegex", "<Leader>mr", "<Plug>MarkRegex" },
+            { mode = { "x" }, desc = "MarkRegex", "<Leader>mr", "<Plug>MarkRegex" },
+            { mode = { "n" }, desc = "MarkClear", "<Leader>mn", "<Plug>MarkClear" },
+            { mode = { "n" }, desc = "MarkAllClear", "<Leader>mc", "<Plug>MarkAllClear" },
+            { mode = { "n" }, desc = "MarkSearchCurrentNext", "<Leader>*", "<Plug>MarkSearchCurrentNext" },
+            { mode = { "n" }, desc = "MarkSearchCurrentPrev", "<Leader>#", "<Plug>MarkSearchCurrentPrev" },
+            { mode = { "n" }, desc = "MarkSearchAnyNext", "<Leader>/", "<Plug>MarkSearchAnyNext" },
+            { mode = { "n" }, desc = "MarkSearchAnyPrev", "<Leader>?", "<Plug>MarkSearchAnyPrev" },
+            { mode = { "n" }, desc = "MarkSearchNext", "*", "<Plug>MarkSearchNext" },
+            { mode = { "n" }, desc = "MarkSearchPrev", "#", "<Plug>MarkSearchPrev" },
     },
-    {
+    dependencies = { 'inkarkat/vim-ingo-library' }
+  },
+  {
     -- Nice bookmarks with mm, mi, mc, ma
     'MattesGroeger/vim-bookmarks',
     -- dependencies = {'tom-anders/telescope-vim-bookmarks.nvim'}
+  },
+  {
+        'wojciech-kulik/filenav.nvim',
+        config = function()
+            require("filenav").setup({
+                next_file_key = "<M-i>",
+                prev_file_key = "<M-o>",
+                max_history = 100,
+                remove_duplicates = false,
+            })
+        end,
+  },
+{
+  "hat0uma/csvview.nvim",
+  ---@module "csvview"
+  ---@type CsvView.Options
+  opts = {
+    parser = { comments = { "#", "//" } },
+    keymaps = {
+      -- Text objects for selecting fields
+      textobject_field_inner = { "if", mode = { "o", "x" } },
+      textobject_field_outer = { "af", mode = { "o", "x" } },
+      -- Excel-like navigation:
+      -- Use <Tab> and <S-Tab> to move horizontally between fields.
+      -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+      -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+      jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+      jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+      jump_next_row = { "<Enter>", mode = { "n", "v" } },
+      jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
     },
+  },
+  cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+  },
+  {
+    "numToStr/FTerm.nvim",
+    event = { 'BufEnter' },
+    opts = {
+      border = 'double',
+      dimensions  = {
+        height = 0.9,
+        width = 0.9,
+      },
+    },
+    keys = {
+      { mode = {'n'}, '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>' },
+      { mode = {'t'}, '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>' },
+    },
+  }
+  , {
+    "HiPhish/rainbow-delimiters.nvim",
+  },
+{
+  "dmtrKovalenko/fff.nvim",
+  build = "cargo build --release",
+  opts = {
+    -- pass here all the options
+  },
+  keys = {
+    {
+      "<leader>fff", -- try it if you didn't it is a banger keybinding for a picker
+      function()
+        require("fff").toggle()
+      end,
+      desc = "Toggle FFF",
+    },
+  },
+},
+{
+  "A7Lavinraj/fyler.nvim",
+  dependencies = { "echasnovski/mini.icons" },
+  branch = "main",
+  opts = {}
+},
+{
+  'projekt0n/github-nvim-theme',
+  name = 'github-theme',
+  lazy = false, -- make sure we load this during startup if it is your main colorscheme
+  priority = 1000, -- make sure to load this before all the other start plugins
+  config = function()
+    require('github-theme').setup({
+      -- ...
+    })
+
+    vim.cmd('colorscheme github_dark')
+  end,
+},
 }

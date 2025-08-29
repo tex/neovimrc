@@ -1,7 +1,7 @@
 return {
   'gelguy/wilder.nvim',
   lazy = false,
-  enabled = true,
+  enabled = false,
   build = ':UpdateRemotePlugins',
   keys = { ':', '/', '?' },
   config = function()
