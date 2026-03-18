@@ -164,6 +164,7 @@ end
 function rg_find ()
   vim.fn.setreg('+', vim.fn.expand("<cword>"))
   local snap = require'snap'
+  snap.setcwd(require'oil'.get_current_dir())
   snap.run {
     prompt = "grep (rg)>",
     -- initial_filter = snap.config.get_initial_filter({filter_with = "cword"}),

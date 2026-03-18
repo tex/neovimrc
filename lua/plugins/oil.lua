@@ -25,7 +25,7 @@ return {
               vim.b.oil_columns = true
               require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
             end
-            end }
+            end },
         },
         preview_win = {
           disable_preview = function(filepath)
