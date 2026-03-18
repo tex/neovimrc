@@ -19,18 +19,18 @@ vim.api.nvim_create_user_command('Messages', function()
   -- create window
   buf = vim.api.nvim_create_buf(false, true)
   local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.2)
+  local height = math.floor(vim.o.lines * 0.6)
   local opts = {
-    split = "below",
+    -- split = "below",
     width = width,
     height = height,
     style = 'minimal',
-    -- relative = 'editor',
-    -- col = (vim.o.columns - width) / 2,
-    -- row = (vim.o.lines - height) / 2 - 1, -- Ajust position to avoid obstruction
-    -- border = 'rounded',                   -- style：rounded/single/double/shadow/none
-    -- title = '',
-    -- title_pos = 'center'
+    relative = 'editor',
+    col = (vim.o.columns - width) / 2,
+    row = (vim.o.lines - height) / 2 - 1, -- Adjust position to avoid obstruction
+    border = 'rounded',                   -- style rounded/single/double/shadow/none
+    title = '',
+    title_pos = 'center'
   }
 
   win = vim.api.nvim_open_win(buf, true, opts)

@@ -39,7 +39,7 @@ end
 local timer
 local image
 vim.api.nvim_create_autocmd({ "CursorMoved", "ModeChanged" }, {
-  desc = "Preview with image",
+  desc = "Oil image preview",
   callback = function()
     if timer then
       timer:again()

@@ -17,6 +17,15 @@ return {
           ["<Left>"] = {"actions.parent", mode = "n"},
           ["<Right>"] = {"actions.select", mode = "n"},
           ["<C-p>"] = {"actions.preview", opts = { split = "botright" } },
+          ["gd"] = {desc = "toggle file details", function()
+            if vim.b.oil_columns then
+              vim.b.oil_columns = nil
+              require("oil").set_columns({ "icon" })
+            else
+              vim.b.oil_columns = true
+              require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+            end
+            end }
         },
         preview_win = {
           disable_preview = function(filepath)

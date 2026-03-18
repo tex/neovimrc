@@ -1,4 +1,5 @@
 nnoremap <buffer> dd :call quickfix#DeleteLine()<CR>
+nnoremap <buffer> gs :call quickfix#Sort()<CR>
 
 " Get current list of quickfix entries "
 " s: - script variable (local to this file) "

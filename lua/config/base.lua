@@ -36,6 +36,8 @@ vim.opt.completeopt = "menu,menuone,noselect"
 
 vim.opt.undofile = true
 
+vim.opt.messagesopt = "wait:0,history:500"
+
 require("config.lazy")
 
 local wk = require("which-key")
@@ -96,23 +98,23 @@ vim.api.nvim_create_autocmd({'BufReadPost'}, {
     end
 })
 
-vim.api.nvim_create_autocmd({"FileType"}, {
-  pattern = { "fnl", "lua" },
+-- vim.keymap.set("c", "<space>", function()
+--   local mode = vim.fn.getcmdtype()
+--     if mode == "?" or mode == "/" then
+--       return ".*"
+--     else
+--       return " "
+--     end
+--   end, { expr = true })
+
+vim.api.nvim_create_autocmd("BufEnter", {
   callback = function()
-      vim.opt_local.tabstop = 2
-      vim.opt_local.softtabstop = 2
-      vim.opt_local.shiftwidth = 2
-      vim.opt_local.expandtab = true
+    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.bo[bufnr].buftype == "nofile" and vim.bo[bufnr].filetype ~= "" then
+      vim.b[bufnr].ts_highlight_incremental_selection = false
+    end
   end,
 })
 
-vim.keymap.set("c", "<space>", function()
-  local mode = vim.fn.getcmdtype()
-    if mode == "?" or mode == "/" then
-      return ".*"
-    else
-      return " "
-    end
-  end, { expr = true })
-
+vim.cmd.packadd('cfilter')
 

@@ -285,28 +285,28 @@ return {
   , {
     "HiPhish/rainbow-delimiters.nvim",
   },
-{
-  "dmtrKovalenko/fff.nvim",
-  build = "cargo build --release",
-  opts = {
-    -- pass here all the options
-  },
-  keys = {
-    {
-      "<leader>fff", -- try it if you didn't it is a banger keybinding for a picker
-      function()
-        require("fff").toggle()
-      end,
-      desc = "Toggle FFF",
-    },
-  },
-},
-{
-  "A7Lavinraj/fyler.nvim",
-  dependencies = { "echasnovski/mini.icons" },
-  branch = "main",
-  opts = {}
-},
+-- {
+--   "dmtrKovalenko/fff.nvim",
+--   build = "cargo build --release",
+--   opts = {
+--     -- pass here all the options
+--   },
+--   keys = {
+--     {
+--       "<leader>fff", -- try it if you didn't it is a banger keybinding for a picker
+--       function()
+--         require("fff").toggle()
+--       end,
+--       desc = "Toggle FFF",
+--     },
+--   },
+-- },
+-- {
+--   "A7Lavinraj/fyler.nvim",
+--   dependencies = { "echasnovski/mini.icons" },
+--   branch = "main",
+--   opts = {}
+-- },
 {
   'projekt0n/github-nvim-theme',
   name = 'github-theme',
@@ -314,10 +314,19 @@ return {
   priority = 1000, -- make sure to load this before all the other start plugins
   config = function()
     require('github-theme').setup({
-      -- ...
     })
-
     vim.cmd('colorscheme github_dark')
   end,
 },
+{
+  'mrcjkb/rustaceanvim',
+  version = '^6', -- Recommended
+  lazy = false, -- This plugin is already lazy
+},
+--{
+--    "DamianVCechov/hexview.nvim",
+--    config = function()
+--        require("hexview").setup()
+--    end
+--},
 }
