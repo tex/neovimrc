@@ -3,14 +3,38 @@ return {
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
+        { "sindrets/diffview.nvim",
+            config = function()
+                require("diffview").setup({
+                    view = { default = { layout = "diff2_vertical" } },
+                    merge_tool = { layout = "diff3_vertical" },
+                    file_history = { layout = "diff2_vertical" },
+                })
+            end,
+        },
     "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
     "nvim-tree/nvim-web-devicons" -- Recommended but not required. Icons in discussion tree.
   },
   enabled = true,
   build = function () require("gitlab.server").build(true) end, -- Builds the Go binary
   config = function()
-    require("gitlab").setup()
+    require("gitlab").setup({
+      debug = { request = true, response = true, gitlab_request = true, gitlab_response = true, },
+      log_path = "/home/msvobod/gitlab.nvim.log", -- Log path for the Go server
+      keymaps = { discussion_tree = { refresh_data = "<leader>r" } },
+      discussion_signs = {
+        enabled = true, -- Show diagnostics for gitlab comments in the reviewer
+        skip_resolved_discussion = false, -- Show diagnostics for resolved discussions
+        severity = vim.diagnostic.severity.INFO, -- ERROR, WARN, INFO, or HINT
+        virtual_text = true, -- Whether to show the comment text inline as floating virtual text
+        use_diagnostic_signs = true, -- Show diagnostic sign (depending on the `severity` setting, e.g., I for INFO) along with the comment icon
+        priority = 100, -- Higher will override LSP warnings, etc
+        icons = {
+          comment = "→|",
+          range = " |",
+        },
+      },
+    })
     local gitlab = require("gitlab")
     local gitlab_server = require("gitlab.server")
     local wk = require("which-key")
