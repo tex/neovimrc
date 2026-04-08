@@ -1,7 +1,7 @@
 return {
   "tex/snap",
   keys = {
-    { "<leader>gbl", desc = "git branches", require("config.snap").git_branches },
+    { "<leader>gb", desc = "git branches", require("config.snap").git_branches },
     { "<leader>gl", desc = "git log", require("config.snap").git_log },
     { "<leader>gf", desc = "git files", require("config.snap").git_files },
     { "<leader>gs", desc = "git status", require("config.snap").git_status },
@@ -10,7 +10,7 @@ return {
     { "<leader>ft", desc = "ttag completion", require("config.snap").ttags_completion },
     { "<Leader>fd", desc = "tag definition", require("config.snap").ttags_def },
     { "<Leader>fr", desc = "tag references", require("config.snap").ttags_ref },
-    { "<Leader>?", desc = "grep buffer", function ()
+    { "<Leader>_", desc = "grep buffer", function ()
       local snap = require'snap'
       snap.run{
         producer = snap.get'consumer.fzy'(snap.get'producer.vim.currentbuffer'),
@@ -25,8 +25,6 @@ return {
           snap.get'producer.vim.oldfile'
         )
       } () end },
-    -- { "<Leader>fb", function () require'snap'.config.file {producer = "vim.buffer"}() end, desc = "buffers" },
-    -- { "<Leader>fo", function () require'snap'.config.file {producer = "vim.oldfile" }() end, desc = "old files" },
   },
   config = function()
     -- this is needed for fzy

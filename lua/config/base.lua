@@ -127,3 +127,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Something or default notify is using echo which doesn't
+-- work in context used in snap (git branch checkout, ...)
+vim.notify=print
