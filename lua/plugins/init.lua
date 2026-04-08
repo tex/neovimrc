@@ -329,5 +329,9 @@ return {
 --        require("hexview").setup()
 --    end
 --},
+{
+  'glts/vim-radical',
+  dependencies = { 'glts/vim-magnum' },
+},
 }
 
