@@ -7,19 +7,14 @@ function git_branches ()
       snap.get'consumer.fzy'(
         snap.get'producer.extcmd'(
           { cmd = "git",
-            args = { "branch", "--sort", "-committerdate", '--format "%(refname:short)"' },
-            -- parse = snap.get'common.string'.split,
-            parse = function (line)
-              local log_entries = snap.get'common.string'.split(line)
-              return vim.tbl_map(snap.get'common.git.parse-log', log_entries)
-            end,
+            args = { "branch", "--sort" ,"-committerdate", "--format", "%(refname:short)" },
+            parse = snap.get'common.string'.split,
             ignore_empty_filter = false,
             ignore_filter = true,
           })
       ),--),
     select = snap.get'select.git',
-    --multiselect = snap.get'select.file'.multiselect,
-    views = { snap.get'preview.git.log' },
+    --views = { snap.get'preview.git.log' },
   }
 end
 

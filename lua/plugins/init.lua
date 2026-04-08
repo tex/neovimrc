@@ -30,13 +30,13 @@ return {
 		},
 	},
     -- { 'stefandtw/quickfix-reflector.vim', },
-{
-  'stevearc/quicker.nvim',
-  event = "FileType qf",
-  ---@module "quicker"
-  ---@type quicker.SetupOptions
-  opts = {},
-},
+--{
+--  'stevearc/quicker.nvim',
+--  event = "FileType qf",
+--  ---@module "quicker"
+--  ---@type quicker.SetupOptions
+--  opts = {},
+--},
   {
 		'kevinhwang91/nvim-bqf',
 		opts = {
@@ -199,11 +199,6 @@ return {
     --"folke/snacks.nvim",             -- optional
   },
 },
-  {
-    'akinsho/toggleterm.nvim',
-    version = "*",
-    config = true
-  },
   { 'dhruvasagar/vim-table-mode',
     keys = { { "<localleader>t", "<cmd>TableModeToggle<CR>", desc = "Toggle table mode" } },
   },
@@ -267,6 +262,11 @@ return {
   },
   cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
   },
+  -- {
+  --   'akinsho/toggleterm.nvim',
+  --   version = "*",
+  --   config = true
+  -- },
   {
     "numToStr/FTerm.nvim",
     event = { 'BufEnter' },
@@ -278,8 +278,8 @@ return {
       },
     },
     keys = {
-      { mode = {'n'}, '<A-i>', '<CMD>lua require("FTerm").toggle()<CR>' },
-      { mode = {'t'}, '<A-i>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>' },
+      { mode = {'n'}, '<A-t>', '<CMD>lua require("FTerm").toggle()<CR>' },
+      { mode = {'t'}, '<A-t>', '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>' },
     },
   }
   , {
@@ -330,3 +330,4 @@ return {
 --    end
 --},
 }
+

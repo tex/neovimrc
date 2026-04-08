@@ -1,10 +1,3 @@
--- save origin reference to 'messages'
-vim.cmd([[
-  if !exists(":OrigMessages")
-    command! OrigMessages messages
-  endif
-]])
-
 local win = nil
 local buf = nil
 
@@ -18,8 +11,8 @@ vim.api.nvim_create_user_command('Messages', function()
 
   -- create window
   buf = vim.api.nvim_create_buf(false, true)
-  local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.6)
+  local width = math.floor(vim.o.columns * 0.9)
+  local height = math.floor(vim.o.lines * 0.85)
   local opts = {
     -- split = "below",
     width = width,
@@ -35,8 +28,9 @@ vim.api.nvim_create_user_command('Messages', function()
 
   win = vim.api.nvim_open_win(buf, true, opts)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, messages)
-  if #messages == 0 then return end
-  vim.api.nvim_win_set_cursor(win,{#messages,0})
+  if #messages > 0 then
+    vim.api.nvim_win_set_cursor(win,{#messages,0})
+  end
   vim.bo[buf].filetype = 'custom-messages' -- for lualine.nvim to disable this type
   vim.bo[buf].modifiable = false
   vim.api.nvim_set_option_value('number', true, { win = win })
@@ -44,6 +38,7 @@ vim.api.nvim_create_user_command('Messages', function()
     -- highlight ErrorMsg
     vim.cmd('syntax match ErrorMsg /E.*/')
   end)
+  vim.keymap.set("n", "<M-m>", ":quit\n", { silent = true, buffer = buf })
 
   vim.api.nvim_create_autocmd("WinClosed", {
     pattern = tostring(win),
@@ -56,7 +51,4 @@ vim.api.nvim_create_user_command('Messages', function()
   })
 end, {})
 
--- replace default command :messages
-vim.cmd([[
-  cnoreabbrev <expr> messages getcmdtype() == ":" && getcmdline() ==# 'messages' ? 'Messages' : 'messages'
-]])
+vim.keymap.set("n", "<M-m>", function() vim.cmd('Messages') end)

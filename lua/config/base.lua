@@ -118,3 +118,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.cmd.packadd('cfilter')
 
+-- I hate plugins overriding qf height and their inability
+-- to do it in consistent way. Set it here manually and for good.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = function()
+    vim.cmd("wincmd J | resize 10")
+  end,
+})
+
