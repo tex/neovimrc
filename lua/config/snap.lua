@@ -2,12 +2,12 @@
 function git_branches ()
   local snap = require'snap'
   snap.run {
-    producer =-- snap.get'consumer.positions'(
+    producer = -- snap.get'consumer.positions'(
       -- snap.get'consumer.score'(
       snap.get'consumer.fzy'(
         snap.get'producer.extcmd'(
           { cmd = "git",
-            args = { "branch", "--sort" ,"-committerdate", "--format", "%(refname:short)" },
+            args = { "branch", "--sort" ,"-committerdate", "--format", "%(refname:short)", "--all" },
             parse = snap.get'common.string'.split,
             ignore_empty_filter = false,
             ignore_filter = true,
